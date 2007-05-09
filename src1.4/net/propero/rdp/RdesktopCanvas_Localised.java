@@ -11,16 +11,19 @@
  */
 package net.propero.rdp;
 
+import java.awt.AWTException;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.*;
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import net.propero.rdp.RdesktopCanvas;
 
 // Created on 03-Sep-2003
 

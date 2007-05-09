@@ -12,8 +12,8 @@
 
 package net.propero.rdp;
 
-import java.io.PrintWriter;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 
 /**

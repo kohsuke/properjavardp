@@ -21,12 +21,10 @@ import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
-
+import net.propero.rdp.Common;
 import net.propero.rdp.CommunicationMonitor;
 import net.propero.rdp.Constants;
 import net.propero.rdp.Input;
-import net.propero.rdp.Common;
 import net.propero.rdp.Options;
 import net.propero.rdp.RdesktopException;
 import net.propero.rdp.RdpPacket;
@@ -35,6 +33,8 @@ import net.propero.rdp.Secure;
 import net.propero.rdp.crypto.CryptoException;
 import net.propero.rdp.rdp5.VChannel;
 import net.propero.rdp.rdp5.VChannels;
+
+import org.apache.log4j.Logger;
 
 public class ClipChannel extends VChannel implements ClipInterface, ClipboardOwner, FocusListener {
 

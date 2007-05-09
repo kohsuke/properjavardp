@@ -10,14 +10,21 @@
  * Purpose: Secure layer of communication
  */
 package net.propero.rdp;
-import java.io.*;
-import java.util.*;
-import java.net.*;
-import java.math.*;
-import org.apache.log4j.Logger;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.StringTokenizer;
 
-import net.propero.rdp.crypto.*;
+import net.propero.rdp.crypto.BlockMessageDigest;
+import net.propero.rdp.crypto.CryptoException;
+import net.propero.rdp.crypto.MD5;
+import net.propero.rdp.crypto.RC4;
+import net.propero.rdp.crypto.SHA1;
 import net.propero.rdp.rdp5.VChannels;
+
+import org.apache.log4j.Logger;
 
 public class Secure {
 	boolean readCert = false;

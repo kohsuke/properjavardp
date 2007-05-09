@@ -17,7 +17,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import net.propero.rdp.Common;
 import net.propero.rdp.Utilities_Localised;
 	 public class ImageSelection
 	    implements Transferable 

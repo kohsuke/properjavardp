@@ -16,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import net.propero.rdp.Common;
 import net.propero.rdp.OrderException;
 import net.propero.rdp.Rdesktop;
 import net.propero.rdp.RdesktopException;

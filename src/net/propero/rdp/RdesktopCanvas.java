@@ -12,12 +12,29 @@
  */
 package net.propero.rdp;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Canvas;
+import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.IndexColorModel;
+import java.awt.image.MemoryImageSource;
 
 import net.propero.rdp.keymapping.KeyCode;
 import net.propero.rdp.keymapping.KeyCode_FileBased;
-import net.propero.rdp.orders.*;
+import net.propero.rdp.orders.BoundsOrder;
+import net.propero.rdp.orders.Brush;
+import net.propero.rdp.orders.DestBltOrder;
+import net.propero.rdp.orders.LineOrder;
+import net.propero.rdp.orders.MemBltOrder;
+import net.propero.rdp.orders.PatBltOrder;
+import net.propero.rdp.orders.PolyLineOrder;
+import net.propero.rdp.orders.RectangleOrder;
+import net.propero.rdp.orders.ScreenBltOrder;
+import net.propero.rdp.orders.TriBltOrder;
+
 import org.apache.log4j.Logger;
 
 // import org.apache.log4j.NDC;

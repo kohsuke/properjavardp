@@ -13,8 +13,6 @@ package net.propero.rdp;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-// The below import is never used
-//import org.apache.log4j.Logger;
 
 public class RdpPacket_Localised extends RdpPacket {
 

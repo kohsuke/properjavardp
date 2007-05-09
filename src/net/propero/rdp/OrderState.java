@@ -12,7 +12,17 @@
  */
 package net.propero.rdp;
 
-import net.propero.rdp.orders.*;
+import net.propero.rdp.orders.BoundsOrder;
+import net.propero.rdp.orders.DeskSaveOrder;
+import net.propero.rdp.orders.DestBltOrder;
+import net.propero.rdp.orders.LineOrder;
+import net.propero.rdp.orders.MemBltOrder;
+import net.propero.rdp.orders.PatBltOrder;
+import net.propero.rdp.orders.PolyLineOrder;
+import net.propero.rdp.orders.RectangleOrder;
+import net.propero.rdp.orders.ScreenBltOrder;
+import net.propero.rdp.orders.Text2Order;
+import net.propero.rdp.orders.TriBltOrder;
 
 class OrderState {
     private int order_type = 0;

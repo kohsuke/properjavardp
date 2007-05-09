@@ -11,10 +11,15 @@
  */
 package net.propero.rdp;
 
-import org.apache.log4j.Logger;
+import gnu.getopt.Getopt;
+import gnu.getopt.LongOpt;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.apache.log4j.Level;
-import java.io.*;
-import gnu.getopt.*;
+import org.apache.log4j.Logger;
 
 public class RDPClientChooser {
 	static Logger logger = Logger.getLogger(RDPClientChooser.class);

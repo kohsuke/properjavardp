@@ -15,7 +15,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 
-import net.propero.rdp.Common;
 import net.propero.rdp.RdpPacket;
 import net.propero.rdp.RdpPacket_Localised;
 import net.propero.rdp.Utilities_Localised;

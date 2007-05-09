@@ -12,7 +12,9 @@
 // Created on 07-Jul-2003
 
 package net.propero.rdp;
-import java.awt.*;
+import java.awt.Frame;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 public class RdesktopFrame_Localised extends RdesktopFrame {
 	public RdesktopFrame_Localised(){

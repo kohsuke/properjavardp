@@ -11,9 +11,15 @@
  */
 package net.propero.rdp.rdp5.cliprdr;
 
-import java.awt.*;
-import java.io.*;
-import java.awt.image.*;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.MemoryImageSource;
+import java.awt.image.PixelGrabber;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import net.propero.rdp.Input;
 

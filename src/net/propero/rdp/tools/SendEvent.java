@@ -11,13 +11,13 @@
  */
 package net.propero.rdp.tools;
 
-import javax.swing.JFrame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import net.propero.rdp.Input;
 import net.propero.rdp.Rdp;

@@ -12,8 +12,8 @@
  */
 package net.propero.rdp;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 public class HexDump {
 	static Logger logger = Logger.getLogger(HexDump.class);

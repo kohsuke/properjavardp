@@ -13,9 +13,13 @@
 // Created on 02-Jul-2003
 
 package net.propero.rdp;
-import java.io.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import net.propero.rdp.crypto.CryptoException;
+import net.propero.rdp.crypto.RC4;
+
 import org.apache.log4j.Logger;
-import net.propero.rdp.crypto.*;
 
 public class Licence {
 	private Secure secure = null;

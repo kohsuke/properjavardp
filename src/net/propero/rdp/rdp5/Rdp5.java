@@ -12,8 +12,11 @@
 
 package net.propero.rdp.rdp5;
 
-import net.propero.rdp.*;
-import net.propero.rdp.crypto.*;
+import net.propero.rdp.OrderException;
+import net.propero.rdp.RdesktopException;
+import net.propero.rdp.Rdp;
+import net.propero.rdp.RdpPacket_Localised;
+import net.propero.rdp.crypto.CryptoException;
 
 public class Rdp5 extends Rdp {
 

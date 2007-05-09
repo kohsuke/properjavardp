@@ -11,8 +11,6 @@
  */
 package net.propero.rdp.keymapping; 
 
-import org.apache.log4j.*;
-import java.awt.event.*;
 
 public class KeyCode
 {

@@ -12,9 +12,6 @@
  */
 package net.propero.rdp;
 
-import java.awt.datatransfer.DataFlavor;
-import java.util.StringTokenizer;
-
 import net.propero.rdp.rdp5.Rdp5;
 
 public class Common {

@@ -11,8 +11,9 @@
  */
 package net.propero.rdp;
 
-import java.io.*;
-import java.net.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.net.InetAddress;
 
 import net.propero.rdp.crypto.CryptoException;
 import net.propero.rdp.rdp5.VChannels;

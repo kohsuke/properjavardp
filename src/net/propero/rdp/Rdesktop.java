@@ -9,11 +9,18 @@
  *
  * Purpose: Main class, launches session
  */
+
 package net.propero.rdp;
 
+import gnu.getopt.Getopt;
+import gnu.getopt.LongOpt;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.InputStream;
-import java.net.*;
-import java.awt.*;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import net.propero.rdp.keymapping.KeyCode_FileBased;
 import net.propero.rdp.rdp5.Rdp5;
@@ -21,9 +28,10 @@ import net.propero.rdp.rdp5.VChannels;
 import net.propero.rdp.rdp5.cliprdr.ClipChannel;
 import net.propero.rdp.tools.SendEvent;
 
-import org.apache.log4j.*;
-
-import gnu.getopt.*;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Rdesktop {
     

@@ -14,14 +14,14 @@ package net.propero.rdp.rdp5;
 import java.io.IOException;
 import java.lang.reflect.Array;
 
-import org.apache.log4j.Logger;
-
 import net.propero.rdp.Input;
 import net.propero.rdp.MCS;
 import net.propero.rdp.Options;
 import net.propero.rdp.RdesktopException;
 import net.propero.rdp.RdpPacket_Localised;
 import net.propero.rdp.crypto.CryptoException;
+
+import org.apache.log4j.Logger;
 
 public class VChannels {
 

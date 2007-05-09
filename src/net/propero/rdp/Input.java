@@ -13,15 +13,20 @@
 
 package net.propero.rdp;
 
+import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.Vector;
+
 import net.propero.rdp.keymapping.KeyCode;
 import net.propero.rdp.keymapping.KeyCode_FileBased;
 import net.propero.rdp.keymapping.KeyMapException;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
-import java.awt.event.*;
-import java.io.InputStream;
-import java.util.Vector;
+import org.apache.log4j.Logger;
 
 public abstract class Input {
 

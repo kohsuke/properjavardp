@@ -12,8 +12,11 @@
 // Created on 07-Jul-2003
 package net.propero.rdp;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.KeyboardFocusManager;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.Collections;
 
 import net.propero.rdp.keymapping.KeyCode;

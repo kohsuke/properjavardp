@@ -10,6 +10,14 @@
 
 package net.propero.rdp.crypto;
 
+import java.security.Identity;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signer;
+
 /**
  * The Key interface is the top-level interface for all keys. It
  * defines the functionality shared by all key objects. All keys
