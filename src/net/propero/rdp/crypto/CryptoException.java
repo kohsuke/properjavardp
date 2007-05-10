@@ -12,9 +12,10 @@ package net.propero.rdp.crypto;
  * @author  David Hopwood
  * @since   Cryptix 2.2.2
  */
-public class CryptoException
-extends Exception
+public class CryptoException extends Exception
 {
+	private static final long	serialVersionUID	= -5302220269148556116L;
+	
     public CryptoException() { super(); }
     /** @param reason  the reason why the exception was thrown. */
     public CryptoException(String reason) { super(reason); }       

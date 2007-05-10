@@ -40,6 +40,8 @@ import net.propero.rdp.RdesktopFrame;
 
 public class RdpMenu extends MenuBar {
 	
+	private static final long	serialVersionUID	= 4400808258398800489L;
+	
 	RdesktopFrame parent;
 	
     /**

@@ -43,6 +43,8 @@ package net.propero.rdp.keymapping;
  */
 public class KeyMapException extends Exception {
 
+	private static final long	serialVersionUID	= 1425205469737542850L;
+
 	public KeyMapException(String s){
 		super(s);
 	}

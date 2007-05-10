@@ -45,6 +45,8 @@ import org.apache.log4j.Logger;
 
 public class ClipBMP extends Component {
 
+	private static final long	serialVersionUID	= -756738379924520867L;
+
 	protected static Logger logger = Logger.getLogger(Input.class);
 
 	//--- Private constants

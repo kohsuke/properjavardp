@@ -42,6 +42,8 @@ import net.propero.rdp.Rdp;
 
 public class SendEvent extends JFrame {
 
+	private static final long	serialVersionUID	= 6809307310347210557L;
+
 	private javax.swing.JPanel jContentPane = null;
 
 	private JTextField inputTypeField = null;

@@ -31,6 +31,8 @@ package net.propero.rdp;
 
 public class OrderException extends Exception {
 
+	private static final long	serialVersionUID	= -4198898937740385398L;
+
     public OrderException() {
 	super();
     }

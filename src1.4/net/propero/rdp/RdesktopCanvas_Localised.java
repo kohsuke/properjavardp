@@ -46,6 +46,9 @@ import javax.imageio.ImageIO;
 // Created on 03-Sep-2003
 
 public class RdesktopCanvas_Localised extends RdesktopCanvas {
+
+	private static final long	serialVersionUID	= -6806580381785981945L;
+
 	private Robot robot = null;
 
     public static void saveToFile(Image image){

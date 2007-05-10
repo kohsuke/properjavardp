@@ -51,6 +51,8 @@ import net.propero.rdp.RdesktopException;
 
 public class RdpApplet extends Applet {
 
+	private static final long	serialVersionUID	= 583386592743649642L;
+	
     TextArea aTextArea = null;
     PrintStream aPrintStream  = null;
   

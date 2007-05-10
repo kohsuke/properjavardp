@@ -35,6 +35,9 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 public class RdesktopFrame_Localised extends RdesktopFrame {
+
+	private static final long	serialVersionUID	= 8966796397221900303L;
+
 	public RdesktopFrame_Localised(){
 		super();
 	}
