@@ -28,8 +28,8 @@
  * 
  */
 // Created on 03-Sep-2003
-
 package net.propero.rdp;
+
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.*;
@@ -38,12 +38,13 @@ import java.awt.*;
 import net.propero.rdp.Options;
 
 public class RdesktopCanvas_Localised extends RdesktopCanvas {
-	RdesktopCanvas_Localised(int width, int height){
-			super(width,height);
-		}
-	
-		public void update(Graphics g) {
-            Rectangle r = g.getClipBounds();
-            g.drawImage(backstore.getSubimage(r.x,r.y,r.width,r.height),r.x,r.y,null);
-		}
+	RdesktopCanvas_Localised(int width, int height) {
+		super(width, height);
+	}
+
+	public void update(Graphics g) {
+		Rectangle r = g.getClipBounds();
+		g.drawImage(backstore.getSubimage(r.x, r.y, r.width, r.height), r.x,
+				r.y, null);
+	}
 }

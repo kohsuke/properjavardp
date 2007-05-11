@@ -37,30 +37,33 @@ import net.propero.rdp.Options;
 import net.propero.rdp.keymapping.KeyCode_FileBased;
 import net.propero.rdp.keymapping.KeyMapException;
 
-
 public class KeyCode_FileBased_Localised extends KeyCode_FileBased {
-	
+
 	private HashMap keysCurrentlyDown = new HashMap();
-	
+
 	/**
 	 * @param fstream
 	 * @throws KeyMapException
 	 */
-	public KeyCode_FileBased_Localised(InputStream fstream) throws KeyMapException {
+	public KeyCode_FileBased_Localised(InputStream fstream)
+			throws KeyMapException {
 		super(fstream);
 	}
 
-	public KeyCode_FileBased_Localised(String s) throws KeyMapException{
+	public KeyCode_FileBased_Localised(String s) throws KeyMapException {
 		super(s);
 	}
-	
-	private void updateCapsLock(KeyEvent e){
-		if(Options.useLockingKeyState){
+
+	private void updateCapsLock(KeyEvent e) {
+		if (Options.useLockingKeyState) {
 			try {
 				Options.useLockingKeyState = true;
-				capsLockDown = e.getComponent().getToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
-			} catch (Exception uoe){ Options.useLockingKeyState = false; }
+				capsLockDown = e.getComponent().getToolkit()
+						.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+			} catch (Exception uoe) {
+				Options.useLockingKeyState = false;
+			}
 		}
 	}
-	
+
 }

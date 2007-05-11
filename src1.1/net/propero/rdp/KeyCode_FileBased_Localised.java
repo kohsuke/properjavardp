@@ -35,20 +35,19 @@ import java.io.InputStream;
 import net.propero.rdp.keymapping.KeyCode_FileBased;
 import net.propero.rdp.keymapping.KeyMapException;
 
-
 public class KeyCode_FileBased_Localised extends KeyCode_FileBased {
 
 	/**
 	 * @param fstream
 	 * @throws KeyMapException
 	 */
-	public KeyCode_FileBased_Localised(InputStream fstream) throws KeyMapException {
+	public KeyCode_FileBased_Localised(InputStream fstream)
+			throws KeyMapException {
 		super(fstream);
 	}
 
-	public KeyCode_FileBased_Localised(String s) throws KeyMapException{
+	public KeyCode_FileBased_Localised(String s) throws KeyMapException {
 		super(s);
 	}
-	
-	
+
 }

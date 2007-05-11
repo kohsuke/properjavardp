@@ -53,12 +53,13 @@ public class UnicodeHandler extends TypeHandler {
 
 	public void handleData(RdpPacket data, int length, ClipInterface c) {
 		String thingy = "";
-		for(int i = 0; i < length; i+=2){
+		for (int i = 0; i < length; i += 2) {
 			int aByte = data.getLittleEndian16();
-			if(aByte != 0) thingy += (char) (aByte);
+			if (aByte != 0)
+				thingy += (char) (aByte);
 		}
 		c.copyToClipboard(new StringSelection(thingy));
-		//return(new StringSelection(thingy));
+		// return(new StringSelection(thingy));
 	}
 
 	public String name() {
@@ -67,39 +68,41 @@ public class UnicodeHandler extends TypeHandler {
 
 	public byte[] fromTransferable(Transferable in) {
 		String s;
-		if (in != null)
-		{
+		if (in != null) {
 			try {
-				s = (String)(in.getTransferData(DataFlavor.stringFlavor));
-			} 
-			catch (Exception e) {
+				s = (String) (in.getTransferData(DataFlavor.stringFlavor));
+			} catch (Exception e) {
 				s = e.toString();
 			}
-			
+
 			// TODO: think of a better way of fixing this
-			s = s.replace('\n',(char) 0x0a);
-			//s = s.replaceAll("" + (char) 0x0a, "" + (char) 0x0d + (char) 0x0a);
-			s = Utilities_Localised.strReplaceAll(s, "" + (char) 0x0a, "" + (char) 0x0d + (char) 0x0a);
+			s = s.replace('\n', (char) 0x0a);
+			// s = s.replaceAll("" + (char) 0x0a, "" + (char) 0x0d + (char)
+			// 0x0a);
+			s = Utilities_Localised.strReplaceAll(s, "" + (char) 0x0a, ""
+					+ (char) 0x0d + (char) 0x0a);
 			byte[] sBytes = s.getBytes();
 			int length = sBytes.length;
-			int lengthBy2 = length*2;
+			int lengthBy2 = length * 2;
 			RdpPacket p = new RdpPacket_Localised(lengthBy2);
-			for(int i = 0; i < sBytes.length; i++){
+			for (int i = 0; i < sBytes.length; i++) {
 				p.setLittleEndian16(sBytes[i]);
 			}
-			sBytes = new byte[length*2];
-			p.copyToByteArray(sBytes,0,0,lengthBy2);
+			sBytes = new byte[length * 2];
+			p.copyToByteArray(sBytes, 0, 0, lengthBy2);
 			return sBytes;
 		}
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.propero.rdp.rdp5.cliprdr.TypeHandler#send_data(java.awt.datatransfer.Transferable)
 	 */
 	public void send_data(Transferable in, ClipInterface c) {
 		byte[] data = fromTransferable(in);
-		c.send_data(data,data.length);
+		c.send_data(data, data.length);
 	}
 
 }

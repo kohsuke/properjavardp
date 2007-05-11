@@ -31,32 +31,33 @@ package net.propero.rdp.orders;
 
 public class DeskSaveOrder extends BoundsOrder {
 
-    private int offset = 0;
-    private int action = 0;
-    
-    public DeskSaveOrder() {
-	super();
-    }
+	private int offset = 0;
 
-    public int getOffset() {
-	return this.offset;
-    }
+	private int action = 0;
 
-    public int getAction() {
-	return this.action;
-    }
+	public DeskSaveOrder() {
+		super();
+	}
 
-    public void setOffset(int offset) {
-	this.offset = offset;
-    }
+	public int getOffset() {
+		return this.offset;
+	}
 
-    public void setAction(int action) {
-	this.action = action;
-    }
-    
-    public void reset() {
-	super.reset();
-	offset = 0;
-	action = 0;
-    }
+	public int getAction() {
+		return this.action;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
+	public void setAction(int action) {
+		this.action = action;
+	}
+
+	public void reset() {
+		super.reset();
+		offset = 0;
+		action = 0;
+	}
 }

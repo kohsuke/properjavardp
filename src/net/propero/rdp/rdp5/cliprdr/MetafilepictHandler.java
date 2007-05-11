@@ -42,26 +42,25 @@ public class MetafilepictHandler extends TypeHandler {
 
 	/* Mapping Modes */
 	public static final int MM_TEXT = 1;
+
 	public static final int MM_LOMETRIC = 2;
+
 	public static final int MM_HIMETRIC = 3;
+
 	public static final int MM_LOENGLISH = 4;
+
 	public static final int MM_HIENGLISH = 5;
+
 	public static final int MM_TWIPS = 6;
+
 	public static final int MM_ISOTROPIC = 7;
+
 	public static final int MM_ANISOTROPIC = 8;
-	
-	String[] mapping_modes = {
-			"undefined",
-			"MM_TEXT",
-			"MM_LOMETRIC",
-			"MM_HIMETRIC",
-			"MM_LOENGLISH",
-			"MM_HIENGLISH",
-			"MM_TWIPS",
-			"MM_ISOTROPIC",
-			"MM_ANISOTROPIC"
-	};
-	
+
+	String[] mapping_modes = { "undefined", "MM_TEXT", "MM_LOMETRIC",
+			"MM_HIMETRIC", "MM_LOENGLISH", "MM_HIENGLISH", "MM_TWIPS",
+			"MM_ISOTROPIC", "MM_ANISOTROPIC" };
+
 	public boolean formatValid(int format) {
 		return (format == CF_METAFILEPICT);
 	}
@@ -77,36 +76,35 @@ public class MetafilepictHandler extends TypeHandler {
 	public Transferable handleData(RdpPacket data, int length) {
 		String thingy = "";
 		OutputStream out = null;
-		
-		//System.out.print("Metafile mapping mode = ");
+
+		// System.out.print("Metafile mapping mode = ");
 		int mm = data.getLittleEndian32();
-		//System.out.print(mapping_modes[mm]);
+		// System.out.print(mapping_modes[mm]);
 		int width = data.getLittleEndian32();
-		//System.out.print(", width = " + width);
+		// System.out.print(", width = " + width);
 		int height = data.getLittleEndian32();
-		//System.out.println(", height = " + height);
-		
+		// System.out.println(", height = " + height);
+
 		try {
 			out = new FileOutputStream("test.wmf");
-		
-			for(int i = 0; i < (length-12); i++){
+
+			for (int i = 0; i < (length - 12); i++) {
 				int aByte = data.get8();
 				out.write(aByte);
 				thingy += Integer.toHexString(aByte & 0xFF) + " ";
 			}
-			//System.out.println(thingy);
+			// System.out.println(thingy);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return(new StringSelection(thingy));
+		return (new StringSelection(thingy));
 	}
 
 	public String name() {
 		return "CF_METAFILEPICT";
 	}
-
 
 	public byte[] fromTransferable(Transferable in) {
 		return null;
@@ -115,24 +113,24 @@ public class MetafilepictHandler extends TypeHandler {
 	public void handleData(RdpPacket data, int length, ClipInterface c) {
 		String thingy = "";
 		OutputStream out = null;
-		
-		//System.out.print("Metafile mapping mode = ");
+
+		// System.out.print("Metafile mapping mode = ");
 		int mm = data.getLittleEndian32();
-		//System.out.print(mapping_modes[mm]);
+		// System.out.print(mapping_modes[mm]);
 		int width = data.getLittleEndian32();
-		//System.out.print(", width = " + width);
+		// System.out.print(", width = " + width);
 		int height = data.getLittleEndian32();
-		//System.out.println(", height = " + height);
-		
+		// System.out.println(", height = " + height);
+
 		try {
 			out = new FileOutputStream("test.wmf");
-		
-			for(int i = 0; i < (length-12); i++){
+
+			for (int i = 0; i < (length - 12); i++) {
 				int aByte = data.get8();
 				out.write(aByte);
 				thingy += Integer.toHexString(aByte & 0xFF) + " ";
 			}
-			//System.out.println(thingy);
+			// System.out.println(thingy);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -140,11 +138,15 @@ public class MetafilepictHandler extends TypeHandler {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.propero.rdp.rdp5.cliprdr.TypeHandler#send_data(java.awt.datatransfer.Transferable, net.propero.rdp.rdp5.cliprdr.ClipInterface)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.propero.rdp.rdp5.cliprdr.TypeHandler#send_data(java.awt.datatransfer.Transferable,
+	 *      net.propero.rdp.rdp5.cliprdr.ClipInterface)
 	 */
 	public void send_data(Transferable in, ClipInterface c) {
-		c.send_null(ClipChannel.CLIPRDR_DATA_RESPONSE,ClipChannel.CLIPRDR_ERROR);
+		c.send_null(ClipChannel.CLIPRDR_DATA_RESPONSE,
+				ClipChannel.CLIPRDR_ERROR);
 	}
 
 }

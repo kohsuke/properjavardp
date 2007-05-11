@@ -31,52 +31,53 @@ package net.propero.rdp.orders;
 
 public class BoundsOrder implements Order {
 
-    private int left = 0;
-    private int right = 0;
-    private int top = 0;
-    private int bottom = 0;
+	private int left = 0;
 
-    public BoundsOrder() {
-    }
+	private int right = 0;
 
-    public int getLeft() {
-	return this.left;
-    }
+	private int top = 0;
 
-    public int getRight() {
-	return this.right;
-    }
+	private int bottom = 0;
 
-    public int getTop() {
-	return this.top;
-    }
+	public BoundsOrder() {
+	}
 
-    public int getBottom() {
-	return this.bottom;
-    }
+	public int getLeft() {
+		return this.left;
+	}
 
-    public void setLeft(int left) {
-	this.left = left;
-    }
+	public int getRight() {
+		return this.right;
+	}
 
-    public void setRight(int right) {
-	this.right = right;
-    }
+	public int getTop() {
+		return this.top;
+	}
 
-    public void setTop(int top) {
-	this.top = top;
-    }
+	public int getBottom() {
+		return this.bottom;
+	}
 
-    public void setBottom(int bottom) {
-	this.bottom = bottom;
-    }
-    
-    public void reset() {
-	left = 0;
-	right = 0;
-	top = 0;
-	bottom = 0;
-    }
+	public void setLeft(int left) {
+		this.left = left;
+	}
+
+	public void setRight(int right) {
+		this.right = right;
+	}
+
+	public void setTop(int top) {
+		this.top = top;
+	}
+
+	public void setBottom(int bottom) {
+		this.bottom = bottom;
+	}
+
+	public void reset() {
+		left = 0;
+		right = 0;
+		top = 0;
+		bottom = 0;
+	}
 }
-
-

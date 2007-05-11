@@ -1,6 +1,6 @@
 Text from: http://www.gnu.org/licenses/gpl.txt
 
-$Id: /cvsroot/properjavardp/properJavaRDP/gpl.txt,v 1.1 2003/09/22 09:55:54 taylof Exp $
+$Id$
 
 -------------------------------------------------------------------------
 		    GNU GENERAL PUBLIC LICENSE

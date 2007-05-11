@@ -28,47 +28,48 @@
  * 
  */
 // Created on 03-Sep-2003
-
 package net.propero.rdp;
+
 import java.awt.image.*;
 import java.awt.*;
 
 import net.propero.rdp.Options;
 
-
 public class RdesktopCanvas_Localised extends RdesktopCanvas {
-	
+
 	private Robot robot = null;
 
-RdesktopCanvas_Localised(int width, int height){
-	super(width,height);
-}
+	RdesktopCanvas_Localised(int width, int height) {
+		super(width, height);
+	}
 
-	public void movePointer(int x, int y){
+	public void movePointer(int x, int y) {
 		Point p = this.getLocationOnScreen();
 		x = x + p.x;
 		y = y + p.y;
 		robot.mouseMove(x, y);
 	}
-	
-	protected Cursor createCustomCursor(Image wincursor, Point p, String s, int cache_idx){
+
+	protected Cursor createCustomCursor(Image wincursor, Point p, String s,
+			int cache_idx) {
 		return Toolkit.getDefaultToolkit().createCustomCursor(wincursor, p, "");
-	}	
-		
-		public void addNotify(){
+	}
+
+	public void addNotify() {
 		super.addNotify();
 
 		if (robot == null) {
 			try {
 				robot = new Robot();
-			} catch(AWTException e) {
-			logger.warn("Pointer movement not allowed");
+			} catch (AWTException e) {
+				logger.warn("Pointer movement not allowed");
 			}
 		}
 	}
-	
-	public void update(Graphics g){
+
+	public void update(Graphics g) {
 		Rectangle r = g.getClipBounds();
-        g.drawImage(backstore.getSubimage(r.x,r.y,r.width,r.height),r.x,r.y,null);
+		g.drawImage(backstore.getSubimage(r.x, r.y, r.width, r.height), r.x,
+				r.y, null);
 	}
 }

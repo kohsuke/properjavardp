@@ -31,5 +31,4 @@ package net.propero.rdp;
 
 public class Utilities_Localised extends Utilities {
 
-    
 }

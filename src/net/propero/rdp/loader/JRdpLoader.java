@@ -42,89 +42,94 @@ import net.propero.rdp.Utilities_Localised;
 public class JRdpLoader {
 
 	// Set of identifiers to be found within the launch file
-	private static String[] identifiers = {
-			"--user", 
-			"--password",
-			"--domain",
-			"--fullscreen",
-			"--geometry",
-			"--use_rdp5"
-	};
-	
+	private static String[] identifiers = { "--user", "--password", "--domain",
+			"--fullscreen", "--geometry", "--use_rdp5" };
+
 	// Set of command-line options mapping to the launch file identifiers
-	private static String[] pairs = {
-			"-u",
-			"-p",
-			"-d",
-			"-f",
-			"-g",
-			"--use_rdp5"
-	};
-	
-	public static void main(String args[]){
-		
-		if(args.length <= 0){
+	private static String[] pairs = { "-u", "-p", "-d", "-f", "-g",
+			"--use_rdp5" };
+
+	public static void main(String args[]) {
+
+		if (args.length <= 0) {
 			System.err.println("Expected usage: JRdpLoader launchFile");
 			System.exit(-1);
 		}
-		
+
 		String launchFile = args[0];
-	
-		String server = ""; String port = "";
-		
-		try{
+
+		String server = "";
+		String port = "";
+
+		try {
 			String outArgs = "";
-			
+
 			// Open the file specified at the command-line
 			FileInputStream fstream = new FileInputStream(launchFile);
 			DataInputStream in = new DataInputStream(fstream);
 			while (in.available() != 0) {
 				String line = in.readLine();
 				StringTokenizer stok = new StringTokenizer(line);
-				if(stok.hasMoreTokens()){
+				if (stok.hasMoreTokens()) {
 					String identifier = stok.nextToken();
 					String value = "";
-					while(stok.hasMoreTokens()){
+					while (stok.hasMoreTokens()) {
 						value += stok.nextToken();
-						if(stok.hasMoreTokens()) value += " ";
+						if (stok.hasMoreTokens())
+							value += " ";
 					}
-				
-					if(identifier.equals("--server")) server = value;
-					else if(identifier.equals("--port")) port = value;
-					else{	
+
+					if (identifier.equals("--server"))
+						server = value;
+					else if (identifier.equals("--port"))
+						port = value;
+					else {
 						String p = getParam(identifier);
-						if(p != null) outArgs += p + " " + value + " ";
+						if (p != null)
+							outArgs += p + " " + value + " ";
 					}
 				}
 			}
-			
-			if(server != null && server != ""){
+
+			if (server != null && server != "") {
 				outArgs += server;
-				if(port != null && port != "") outArgs += ":" + port;
-				
-                //String[] finArgs = outArgs.split(" ");
-                String[] finArgs = Utilities_Localised.split(outArgs, " ");
-                
-                Rdesktop.main(finArgs);
+				if (port != null && port != "")
+					outArgs += ":" + port;
+
+				// String[] finArgs = outArgs.split(" ");
+				String[] finArgs = Utilities_Localised.split(outArgs, " ");
+
+				Rdesktop.main(finArgs);
 				in.close();
-			}else{ System.err.println("No server name provided"); System.exit(0); }
-			
-        
+			} else {
+				System.err.println("No server name provided");
+				System.exit(0);
+			}
+
+		} catch (IOException ioe) {
+			System.err.println("Launch file could not be read: "
+					+ ioe.getMessage());
+			System.exit(-1);
+		} catch (OrderException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (RdesktopException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
 		}
-		catch(IOException ioe){ System.err.println("Launch file could not be read: " + ioe.getMessage()); System.exit(-1); } 
-		catch (OrderException e) { e.printStackTrace(); System.exit(-1); } 
-		catch (RdesktopException e) { e.printStackTrace(); System.exit(-1);	}
-		catch(Exception e){ e.printStackTrace(); System.exit(-1); }
 	}
-	
-	private static String getParam(String identifier){
-		for(int i = 0; i < identifiers.length; i++){
-			if(identifier.equals(identifiers[i])){
+
+	private static String getParam(String identifier) {
+		for (int i = 0; i < identifiers.length; i++) {
+			if (identifier.equals(identifiers[i])) {
 				return pairs[i];
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 }

@@ -19,6 +19,14 @@ http://sourceforge.net/projects/properjavardp
 This software is released without warranty under the GPL (see
 gpl.txt).
 
-$Id: /cvsroot/properjavardp/properJavaRDP/readme.txt,v 1.2 2005/08/16 12:46:13 telliott Exp $
+* * * * * * * * * Coding style * * * * * * * * *
+We mainly develop this oriject using Eclipse.
+
+This project uses Eclipse built-in coding style to have consisten coding
+style accross all files (also minimizes diffs). Please press format the code
+before commiting. Thanks.
+* * * * * * * * * Coding style * * * * * * * * *
+
+$Id$
 
 End.

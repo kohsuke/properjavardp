@@ -36,37 +36,32 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import net.propero.rdp.Utilities_Localised;
-	 public class ImageSelection
-	    implements Transferable 
-	  {
-	    // the Image object which will be housed by the ImageSelection
-	    private Image image;
 
-	    public ImageSelection(Image image) {
-	      this.image = image;
-	    }
+public class ImageSelection implements Transferable {
+	// the Image object which will be housed by the ImageSelection
+	private Image image;
 
-	    // Returns the supported flavors of our implementation
-	    public DataFlavor[] getTransferDataFlavors() 
-	    {
-	      return new DataFlavor[] {Utilities_Localised.imageFlavor};
-	    }
-	    
-	    // Returns true if flavor is supported
-	    public boolean isDataFlavorSupported(DataFlavor flavor) 
-	    {
-	      return Utilities_Localised.imageFlavor.equals(flavor);
-	    }
+	public ImageSelection(Image image) {
+		this.image = image;
+	}
 
-	    // Returns Image object housed by Transferable object
-	    public Object getTransferData(DataFlavor flavor)
-	      throws UnsupportedFlavorException,IOException 
-	    {
-	      if (!Utilities_Localised.imageFlavor.equals(flavor)) 
-	      {
-	        throw new UnsupportedFlavorException(flavor);
-	      }
-	      // else return the payload
-	      return image;
-	    }
-	  }
+	// Returns the supported flavors of our implementation
+	public DataFlavor[] getTransferDataFlavors() {
+		return new DataFlavor[] { Utilities_Localised.imageFlavor };
+	}
+
+	// Returns true if flavor is supported
+	public boolean isDataFlavorSupported(DataFlavor flavor) {
+		return Utilities_Localised.imageFlavor.equals(flavor);
+	}
+
+	// Returns Image object housed by Transferable object
+	public Object getTransferData(DataFlavor flavor)
+			throws UnsupportedFlavorException, IOException {
+		if (!Utilities_Localised.imageFlavor.equals(flavor)) {
+			throw new UnsupportedFlavorException(flavor);
+		}
+		// else return the payload
+		return image;
+	}
+}

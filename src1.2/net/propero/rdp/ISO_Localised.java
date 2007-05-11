@@ -28,7 +28,6 @@
  * 
  */
 // Created on 05-Aug-2003
-
 package net.propero.rdp;
 
 public class ISO_Localised extends ISO {

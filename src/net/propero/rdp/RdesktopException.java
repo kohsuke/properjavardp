@@ -31,13 +31,13 @@ package net.propero.rdp;
 
 public class RdesktopException extends Exception {
 
-	private static final long	serialVersionUID	= 2839110732850220601L;
+	private static final long serialVersionUID = 2839110732850220601L;
 
-    public RdesktopException() {
-	super();
-    }
+	public RdesktopException() {
+		super();
+	}
 
-    public RdesktopException(String s) {
-	super(s);
-    }
+	public RdesktopException(String s) {
+		super(s);
+	}
 }

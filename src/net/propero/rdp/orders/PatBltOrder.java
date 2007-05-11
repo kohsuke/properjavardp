@@ -31,39 +31,41 @@ package net.propero.rdp.orders;
 
 public class PatBltOrder extends DestBltOrder {
 
-    private int bgcolor = 0;
-    private int fgcolor = 0;
-    private Brush brush = null;
+	private int bgcolor = 0;
 
-    public PatBltOrder() {
-	super();
-	brush = new Brush();
-    }
+	private int fgcolor = 0;
 
-    public int getBackgroundColor() {
-	return this.bgcolor;
-    }
-    
-    public int getForegroundColor() {
-	return this.fgcolor;
-    }
-    
-    public Brush getBrush(){
-   	return this.brush;
-    }
+	private Brush brush = null;
 
-    public void setBackgroundColor(int bgcolor) {
-	this.bgcolor = bgcolor;
-    }
-    
-    public void setForegroundColor(int fgcolor) {
-	this.fgcolor = fgcolor;
-    }
+	public PatBltOrder() {
+		super();
+		brush = new Brush();
+	}
 
-    public void reset() {
-	super.reset();
-	bgcolor = 0;
-	fgcolor = 0;
-	brush.reset();
-    }
+	public int getBackgroundColor() {
+		return this.bgcolor;
+	}
+
+	public int getForegroundColor() {
+		return this.fgcolor;
+	}
+
+	public Brush getBrush() {
+		return this.brush;
+	}
+
+	public void setBackgroundColor(int bgcolor) {
+		this.bgcolor = bgcolor;
+	}
+
+	public void setForegroundColor(int fgcolor) {
+		this.fgcolor = fgcolor;
+	}
+
+	public void reset() {
+		super.reset();
+		bgcolor = 0;
+		fgcolor = 0;
+		brush.reset();
+	}
 }

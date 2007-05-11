@@ -42,23 +42,34 @@ import net.propero.rdp.Rdp;
 
 public class SendEvent extends JFrame {
 
-	private static final long	serialVersionUID	= 6809307310347210557L;
+	private static final long serialVersionUID = 6809307310347210557L;
 
 	private javax.swing.JPanel jContentPane = null;
 
 	private JTextField inputTypeField = null;
+
 	private JLabel jLabel = null;
+
 	private JTextField flagsField = null;
+
 	private JLabel jLabel1 = null;
+
 	private JTextField param1Field = null;
+
 	private JLabel jLabel2 = null;
+
 	private JTextField param2Field = null;
+
 	private JLabel jLabel3 = null;
+
 	private JButton jButton = null;
+
 	private JTextField flagMaskField = null;
+
 	private JButton jButton1 = null;
-	
+
 	Rdp rdp;
+
 	/**
 	 * This is the default constructor
 	 */
@@ -68,28 +79,29 @@ public class SendEvent extends JFrame {
 		this.rdp = rdp;
 	}
 
-	
 	public SendEvent() {
 		super();
 		initialize();
 	}
+
 	/**
 	 * This method initializes this
 	 * 
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(300,200);
+		this.setSize(300, 200);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Send Event");
 	}
+
 	/**
 	 * This method initializes jContentPane
 	 * 
 	 * @return javax.swing.JPanel
 	 */
 	private javax.swing.JPanel getJContentPane() {
-		if(jContentPane == null) {
+		if (jContentPane == null) {
 			jLabel3 = new JLabel();
 			jLabel2 = new JLabel();
 			jLabel1 = new JLabel();
@@ -157,97 +169,113 @@ public class SendEvent extends JFrame {
 		}
 		return jContentPane;
 	}
+
 	/**
-	 * This method initializes inputTypeField	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
+	 * This method initializes inputTypeField
+	 * 
+	 * @return javax.swing.JTextField
+	 */
 	private JTextField getInputTypeField() {
 		if (inputTypeField == null) {
 			inputTypeField = new JTextField();
 		}
 		return inputTypeField;
 	}
+
 	/**
-	 * This method initializes flagsField	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
+	 * This method initializes flagsField
+	 * 
+	 * @return javax.swing.JTextField
+	 */
 	private JTextField getFlagsField() {
 		if (flagsField == null) {
 			flagsField = new JTextField();
 		}
 		return flagsField;
 	}
+
 	/**
-	 * This method initializes param1Field	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
+	 * This method initializes param1Field
+	 * 
+	 * @return javax.swing.JTextField
+	 */
 	private JTextField getParam1Field() {
 		if (param1Field == null) {
 			param1Field = new JTextField();
 		}
 		return param1Field;
 	}
+
 	/**
-	 * This method initializes param2Field	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
+	 * This method initializes param2Field
+	 * 
+	 * @return javax.swing.JTextField
+	 */
 	private JTextField getParam2Field() {
 		if (param2Field == null) {
 			param2Field = new JTextField();
 		}
 		return param2Field;
 	}
+
 	/**
-	 * This method initializes jButton	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */    
+	 * This method initializes jButton
+	 * 
+	 * @return javax.swing.JButton
+	 */
 	private JButton getJButton() {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Send Event");
-			jButton.addActionListener(new java.awt.event.ActionListener() { 
-				public void actionPerformed(java.awt.event.ActionEvent e) {    
-					if(rdp != null){
-						rdp.sendInput(Input.getTime(),Integer.decode(inputTypeField.getText()).intValue(),Integer.decode(flagsField.getText()).intValue(),Integer.decode(param1Field.getText()).intValue(),Integer.decode(param2Field.getText()).intValue());
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if (rdp != null) {
+						rdp.sendInput(Input.getTime(), Integer.decode(
+								inputTypeField.getText()).intValue(), Integer
+								.decode(flagsField.getText()).intValue(),
+								Integer.decode(param1Field.getText())
+										.intValue(), Integer.decode(
+										param2Field.getText()).intValue());
 					}
 				}
 			});
 		}
 		return jButton;
 	}
+
 	/**
-	 * This method initializes flagMaskField	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
+	 * This method initializes flagMaskField
+	 * 
+	 * @return javax.swing.JTextField
+	 */
 	private JTextField getFlagMaskField() {
 		if (flagMaskField == null) {
 			flagMaskField = new JTextField();
 		}
 		return flagMaskField;
 	}
+
 	/**
-	 * This method initializes jButton1	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */    
+	 * This method initializes jButton1
+	 * 
+	 * @return javax.swing.JButton
+	 */
 	private JButton getJButton1() {
 		if (jButton1 == null) {
 			jButton1 = new JButton();
 			jButton1.setText("Apply Mask");
-			jButton1.addActionListener(new java.awt.event.ActionListener() { 
-				public void actionPerformed(java.awt.event.ActionEvent e) {    
+			jButton1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// apply the mask to the flags field
-					flagsField.setText("0x" + Integer.toHexString(Integer.decode(flagsField.getText()).intValue() | Integer.decode(flagMaskField.getText()).intValue()));
+					flagsField.setText("0x"
+							+ Integer.toHexString(Integer.decode(
+									flagsField.getText()).intValue()
+									| Integer.decode(flagMaskField.getText())
+											.intValue()));
 					flagMaskField.setText("");
 				}
 			});
 		}
 		return jButton1;
 	}
-       }
+}

@@ -32,10 +32,10 @@ package net.propero.rdp;
 
 public class ConnectionException extends Exception {
 
-	private static final long	serialVersionUID	= -4320262947228180992L;
+	private static final long serialVersionUID = -4320262947228180992L;
 
-    public ConnectionException(String message){
-        super(message);
-    }
-    
+	public ConnectionException(String message) {
+		super(message);
+	}
+
 }

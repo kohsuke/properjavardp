@@ -55,10 +55,10 @@ import net.propero.rdp.rdp5.cliprdr.ClipChannel;
 
 import org.apache.log4j.Logger;
 
-//import javax.swing.Box;
+// import javax.swing.Box;
 
-public abstract class RdesktopFrame extends Frame {  
-    
+public abstract class RdesktopFrame extends Frame {
+
 	static Logger logger = Logger.getLogger(RdesktopFrame.class);
 
 	public RdesktopCanvas canvas = null;
@@ -67,15 +67,17 @@ public abstract class RdesktopFrame extends Frame {
 
 	public RdpMenu menu = null;
 
-    /**
-     * Register the clipboard channel
-     * @param c ClipChannel object for controlling clipboard mapping
-     */
+	/**
+	 * Register the clipboard channel
+	 * 
+	 * @param c
+	 *            ClipChannel object for controlling clipboard mapping
+	 */
 	public void setClip(ClipChannel c) {
 		canvas.addFocusListener(c);
 	}
 
-    public boolean action(Event event, Object arg) {
+	public boolean action(Event event, Object arg) {
 		if (menu != null)
 			return menu.action(event, arg);
 		return false;
@@ -83,23 +85,23 @@ public abstract class RdesktopFrame extends Frame {
 
 	protected boolean inFullscreen = false;
 
-    /**
-     * Switch to fullscreen mode
-     */
+	/**
+	 * Switch to fullscreen mode
+	 */
 	public void goFullScreen() {
 		inFullscreen = true;
 	}
 
-    /**
-     * Exit fullscreen mode
-     */
+	/**
+	 * Exit fullscreen mode
+	 */
 	public void leaveFullScreen() {
 		inFullscreen = false;
 	}
 
-    /**
-     * Switch in/out of fullscreen mode
-     */
+	/**
+	 * Switch in/out of fullscreen mode
+	 */
 	public void toggleFullScreen() {
 		if (inFullscreen)
 			leaveFullScreen();
@@ -109,10 +111,10 @@ public abstract class RdesktopFrame extends Frame {
 
 	private boolean menuVisible = false;
 
-    /**
-     * Display the menu bar
-     */
-	public void showMenu(){
+	/**
+	 * Display the menu bar
+	 */
+	public void showMenu() {
 		if (menu == null)
 			menu = new RdpMenu(this);
 
@@ -121,35 +123,38 @@ public abstract class RdesktopFrame extends Frame {
 		canvas.repaint();
 		menuVisible = true;
 	}
-	
-    /**
-     * Hide the menu bar
-     */
-	public void hideMenu(){
-		if(menuVisible && Options.enable_menu) this.setMenuBar(null);
-		//canvas.setSize(this.WIDTH, this.HEIGHT);
+
+	/**
+	 * Hide the menu bar
+	 */
+	public void hideMenu() {
+		if (menuVisible && Options.enable_menu)
+			this.setMenuBar(null);
+		// canvas.setSize(this.WIDTH, this.HEIGHT);
 		canvas.repaint();
 		menuVisible = false;
 	}
-	
+
 	/**
-     * Toggle the menu on/off (show if hidden, hide if visible)
-     *
+	 * Toggle the menu on/off (show if hidden, hide if visible)
+	 * 
 	 */
 	public void toggleMenu() {
-		if(!menuVisible) showMenu();
-		else hideMenu();
+		if (!menuVisible)
+			showMenu();
+		else
+			hideMenu();
 	}
 
-    /**
-     * Create a new RdesktopFrame.
-     * Size defined by Options.width and Options.height
-     * Creates RdesktopCanvas occupying entire frame
-     */
+	/**
+	 * Create a new RdesktopFrame. Size defined by Options.width and
+	 * Options.height Creates RdesktopCanvas occupying entire frame
+	 */
 	public RdesktopFrame() {
 		super();
 		Common.frame = this;
-		this.canvas = new RdesktopCanvas_Localised(Options.width, Options.height);
+		this.canvas = new RdesktopCanvas_Localised(Options.width,
+				Options.height);
 		add(this.canvas);
 		setTitle(Options.windowTitle);
 
@@ -172,8 +177,8 @@ public abstract class RdesktopFrame extends Frame {
 		// Linux Java 1.3 needs pack() before setResizeable
 
 		addWindowListener(new RdesktopWindowAdapter());
-        canvas.addFocusListener(new RdesktopFocusListener());
-        if (Constants.OS == Constants.WINDOWS) {
+		canvas.addFocusListener(new RdesktopFocusListener());
+		if (Constants.OS == Constants.WINDOWS) {
 			// redraws screen on window move
 			addComponentListener(new RdesktopComponentAdapter());
 		}
@@ -181,49 +186,53 @@ public abstract class RdesktopFrame extends Frame {
 		canvas.requestFocus();
 	}
 
-
-    /**
-     * Retrieve the canvas contained within this frame
-     * @return RdesktopCanvas object associated with this frame
-     */
+	/**
+	 * Retrieve the canvas contained within this frame
+	 * 
+	 * @return RdesktopCanvas object associated with this frame
+	 */
 	public RdesktopCanvas getCanvas() {
 		return this.canvas;
 	}
 
-    /**
-     * Register the RDP communications layer with this frame
-     * @param rdp Rdp object encapsulating the RDP comms layer
-     */
+	/**
+	 * Register the RDP communications layer with this frame
+	 * 
+	 * @param rdp
+	 *            Rdp object encapsulating the RDP comms layer
+	 */
 	public void registerCommLayer(Rdp rdp) {
 		this.rdp = rdp;
 		canvas.registerCommLayer(rdp);
 	}
 
-    /**
-     * Register keymap
-     * @param keys Keymapping object for use in handling keyboard events
-     */
+	/**
+	 * Register keymap
+	 * 
+	 * @param keys
+	 *            Keymapping object for use in handling keyboard events
+	 */
 	public void registerKeyboard(KeyCode_FileBased keys) {
 		canvas.registerKeyboard(keys);
 	}
 
-    class RdesktopFocusListener implements FocusListener {
+	class RdesktopFocusListener implements FocusListener {
 
-        public void focusGained(FocusEvent arg0) {
-            if (Constants.OS == Constants.WINDOWS) {
-                // canvas.repaint();
-                canvas.repaint(0, 0, Options.width, Options.height);
-            }
-            // gained focus..need to check state of locking keys
-            canvas.gainedFocus();
-        }
+		public void focusGained(FocusEvent arg0) {
+			if (Constants.OS == Constants.WINDOWS) {
+				// canvas.repaint();
+				canvas.repaint(0, 0, Options.width, Options.height);
+			}
+			// gained focus..need to check state of locking keys
+			canvas.gainedFocus();
+		}
 
-        public void focusLost(FocusEvent arg0) {
-            //  lost focus - need clear keys that are down
-            canvas.lostFocus();            
-        }
-    }
-    
+		public void focusLost(FocusEvent arg0) {
+			// lost focus - need clear keys that are down
+			canvas.lostFocus();
+		}
+	}
+
 	class RdesktopWindowAdapter extends WindowAdapter {
 
 		public void windowClosing(WindowEvent e) {
@@ -232,7 +241,7 @@ public abstract class RdesktopFrame extends Frame {
 		}
 
 		public void windowLostFocus(WindowEvent e) {
-            logger.info("windowLostFocus");
+			logger.info("windowLostFocus");
 			// lost focus - need clear keys that are down
 			canvas.lostFocus();
 		}
@@ -349,11 +358,14 @@ public abstract class RdesktopFrame extends Frame {
 		}
 	}
 
-    /**
-     * Display an error dialog with "Yes" and "No" buttons and the title "properJavaRDP error"
-     * @param msg Array of message lines to display in dialog box
-     * @return True if "Yes" was clicked to dismiss box
-     */
+	/**
+	 * Display an error dialog with "Yes" and "No" buttons and the title
+	 * "properJavaRDP error"
+	 * 
+	 * @param msg
+	 *            Array of message lines to display in dialog box
+	 * @return True if "Yes" was clicked to dismiss box
+	 */
 	public boolean showYesNoErrorDialog(String[] msg) {
 
 		YesNoDialog d = new YesNoDialog(this, "properJavaRDP error", msg);
@@ -361,27 +373,31 @@ public abstract class RdesktopFrame extends Frame {
 		return d.retry;
 	}
 
-    /**
-     * Display an error dialog with the title "properJavaRDP error"
-     * @param msg Array of message lines to display in dialog box
-     */
+	/**
+	 * Display an error dialog with the title "properJavaRDP error"
+	 * 
+	 * @param msg
+	 *            Array of message lines to display in dialog box
+	 */
 	public void showErrorDialog(String[] msg) {
 		Dialog d = new OKDialog(this, "properJavaRDP error", msg);
 		d.show();
 	}
 
-    /**
-     * Notify the canvas that the connection is ready for sending messages
-     */
+	/**
+	 * Notify the canvas that the connection is ready for sending messages
+	 */
 	public void triggerReadyToSend() {
 		this.show();
 		canvas.triggerReadyToSend();
 	}
 
-    /**
-     * Centre a window to the screen
-     * @param f Window to be centred
-     */
+	/**
+	 * Centre a window to the screen
+	 * 
+	 * @param f
+	 *            Window to be centred
+	 */
 	public void centreWindow(Window f) {
 		Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension window_size = f.getSize();
@@ -394,9 +410,9 @@ public abstract class RdesktopFrame extends Frame {
 		f.setLocation(x, y);
 	}
 
-    /**
-     * Centre this window
-     */
+	/**
+	 * Centre this window
+	 */
 	public void centreWindow() {
 		centreWindow(this);
 	}

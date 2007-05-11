@@ -47,73 +47,78 @@ import javax.imageio.ImageIO;
 
 public class RdesktopCanvas_Localised extends RdesktopCanvas {
 
-	private static final long	serialVersionUID	= -6806580381785981945L;
+	private static final long serialVersionUID = -6806580381785981945L;
 
 	private Robot robot = null;
 
-    public static void saveToFile(Image image){
-        if(Options.server_bpp == 8) return;
-           
-        BufferedImage img = null;
-         
-        img = new BufferedImage(image.getWidth(null), image.getHeight(null),BufferedImage.TYPE_INT_RGB);
-        Graphics g = img.getGraphics();
-        g.drawImage(image, 0, 0, null);
-        
-        // Write generated image to a file
-        try {
-            // Save as JPEG
-            File file = new File("./testimages/" + Options.imgCount + ".jpg");
-            Options.imgCount++;
-            ImageIO.write(img, "jpg", file);
-        } catch (IOException e) {
-        }
-        
-        g.dispose();
-    }    
-        
-    BufferedImage apex_backstore = null;
-    
-	RdesktopCanvas_Localised(int width, int height){
-		super(width,height);
-        apex_backstore = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	public static void saveToFile(Image image) {
+		if (Options.server_bpp == 8)
+			return;
+
+		BufferedImage img = null;
+
+		img = new BufferedImage(image.getWidth(null), image.getHeight(null),
+				BufferedImage.TYPE_INT_RGB);
+		Graphics g = img.getGraphics();
+		g.drawImage(image, 0, 0, null);
+
+		// Write generated image to a file
+		try {
+			// Save as JPEG
+			File file = new File("./testimages/" + Options.imgCount + ".jpg");
+			Options.imgCount++;
+			ImageIO.write(img, "jpg", file);
+		} catch (IOException e) {
+		}
+
+		g.dispose();
 	}
-	
-	public void movePointer(int x, int y){
+
+	BufferedImage apex_backstore = null;
+
+	RdesktopCanvas_Localised(int width, int height) {
+		super(width, height);
+		apex_backstore = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_RGB);
+	}
+
+	public void movePointer(int x, int y) {
 		Point p = this.getLocationOnScreen();
 		x = x + p.x;
 		y = y + p.y;
 		robot.mouseMove(x, y);
 	}
 
-	protected Cursor createCustomCursor(Image wincursor, Point p, String s, int cache_idx){
+	protected Cursor createCustomCursor(Image wincursor, Point p, String s,
+			int cache_idx) {
 		return Toolkit.getDefaultToolkit().createCustomCursor(wincursor, p, "");
-	}	
-	
-		public void addNotify(){
+	}
+
+	public void addNotify() {
 		super.addNotify();
 
 		if (robot == null) {
 			try {
 				robot = new Robot();
-			} catch(AWTException e) {
-			logger.warn("Pointer movement not allowed");
+			} catch (AWTException e) {
+				logger.warn("Pointer movement not allowed");
 			}
 		}
 	}
-        		
+
 	public void update(Graphics g) {
-		        
-  		Rectangle r = g.getClipBounds();
-	    g.drawImage(backstore.getSubimage(r.x,r.y,r.width,r.height),r.x,r.y,null);
-        
-        if(Options.save_graphics){
-            RdesktopCanvas_Localised.saveToFile(backstore.getSubimage(r.x,r.y,r.width,r.height));
-        }
-                        
-       
-        //}
-  		
-    }
-        
+
+		Rectangle r = g.getClipBounds();
+		g.drawImage(backstore.getSubimage(r.x, r.y, r.width, r.height), r.x,
+				r.y, null);
+
+		if (Options.save_graphics) {
+			RdesktopCanvas_Localised.saveToFile(backstore.getSubimage(r.x, r.y,
+					r.width, r.height));
+		}
+
+		// }
+
+	}
+
 }

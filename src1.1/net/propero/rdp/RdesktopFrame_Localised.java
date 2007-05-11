@@ -28,16 +28,14 @@
  * 
  */
 // Created on 03-Sep-2003
-
 package net.propero.rdp;
 
-
 public class RdesktopFrame_Localised extends RdesktopFrame {
-	protected void checkFullScreenWidthHeight(){
-			if(Options.fullscreen){
-			//	can't remove frame decoration so reduce size to compensate
-				Options.height -= 26;
-				Options.width -= 8;
-			}
+	protected void checkFullScreenWidthHeight() {
+		if (Options.fullscreen) {
+			// can't remove frame decoration so reduce size to compensate
+			Options.height -= 26;
+			Options.width -= 8;
 		}
+	}
 }

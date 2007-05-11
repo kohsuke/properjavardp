@@ -45,17 +45,17 @@ import org.apache.log4j.Logger;
 
 public class ClipBMP extends Component {
 
-	private static final long	serialVersionUID	= -756738379924520867L;
+	private static final long serialVersionUID = -756738379924520867L;
 
 	protected static Logger logger = Logger.getLogger(Input.class);
 
-	//--- Private constants
+	// --- Private constants
 	private final static int BITMAPFILEHEADER_SIZE = 14;
 
 	private final static int BITMAPINFOHEADER_SIZE = 40;
 
-	//--- Private variable declaration
-	//--- Bitmap file header
+	// --- Private variable declaration
+	// --- Bitmap file header
 	private byte bitmapFileHeader[] = new byte[14];
 
 	private byte bfType[] = { 'B', 'M' };
@@ -68,7 +68,7 @@ public class ClipBMP extends Component {
 
 	private int bfOffBits = BITMAPFILEHEADER_SIZE + BITMAPINFOHEADER_SIZE;
 
-	//--- Bitmap info header
+	// --- Bitmap info header
 	private byte bitmapInfoHeader[] = new byte[40];
 
 	private int biSize = BITMAPINFOHEADER_SIZE;
@@ -93,13 +93,13 @@ public class ClipBMP extends Component {
 
 	private int biClrImportant = 0;
 
-	//--- Bitmap raw data
+	// --- Bitmap raw data
 	private int bitmap[];
 
-	//--- File section
+	// --- File section
 	private OutputStream fo;
 
-	//--- Default constructor
+	// --- Default constructor
 	public ClipBMP() {
 	}
 
@@ -131,12 +131,12 @@ public class ClipBMP extends Component {
 	 * method writeBitmapFileHeader creates and writes the bitmap file header;
 	 * writeBitmapInfoHeader creates the information header; and writeBitmap
 	 * writes the image.
-	 *  
+	 * 
 	 */
 	private void save(Image parImage, int parWidth, int parHeight) {
 		try {
 			convertImage(parImage, parWidth, parHeight);
-			//writeBitmapFileHeader();
+			// writeBitmapFileHeader();
 			writeBitmapInfoHeader();
 			writeBitmap();
 		} catch (Exception saveEx) {
@@ -147,7 +147,7 @@ public class ClipBMP extends Component {
 	/*
 	 * convertImage converts the memory image to the bitmap format (BRG). It
 	 * also computes some information for the bitmap info header.
-	 *  
+	 * 
 	 */
 	private boolean convertImage(Image parImage, int parWidth, int parHeight) {
 		int pad;
@@ -212,7 +212,7 @@ public class ClipBMP extends Component {
 					rowCount++;
 				rowIndex++;
 			}
-			//--- Update the size of the file
+			// --- Update the size of the file
 			bfSize += padCount - pad;
 			biSizeImage += padCount - pad;
 		} catch (Exception wb) {
@@ -222,7 +222,7 @@ public class ClipBMP extends Component {
 
 	/*
 	 * writeBitmapFileHeader writes the bitmap file header to the file.
-	 *  
+	 * 
 	 */
 	private void writeBitmapFileHeader() {
 		try {
@@ -239,7 +239,7 @@ public class ClipBMP extends Component {
 	/*
 	 * 
 	 * writeBitmapInfoHeader writes the bitmap information header to the file.
-	 *  
+	 * 
 	 */
 	private void writeBitmapInfoHeader() {
 		try {
@@ -263,7 +263,7 @@ public class ClipBMP extends Component {
 	 * 
 	 * intToWord converts an int to a word, where the return value is stored in
 	 * a 2-byte array.
-	 *  
+	 * 
 	 */
 	private byte[] intToWord(int parValue) {
 		byte retValue[] = new byte[2];
@@ -276,7 +276,7 @@ public class ClipBMP extends Component {
 	 * 
 	 * intToDWord converts an int to a double word, where the return value is
 	 * stored in a 4-byte array.
-	 *  
+	 * 
 	 */
 	private byte[] intToDWord(int parValue) {
 		byte retValue[] = new byte[4];
@@ -302,78 +302,78 @@ public class ClipBMP extends Component {
 	 * getDirectory() and getFile() methods.
 	 * 
 	 * Returns: Image Object, be sure to check for (Image)null !!!!
-	 *  
+	 * 
 	 */
 	public static Image loadbitmap(InputStream fs) {
 		Image image;
 		try {
-			//int bflen = 14; // 14 byte BITMAPFILEHEADER
-			//byte bf[] = new byte[bflen];
-			//fs.read(bf, 0, bflen);
+			// int bflen = 14; // 14 byte BITMAPFILEHEADER
+			// byte bf[] = new byte[bflen];
+			// fs.read(bf, 0, bflen);
 			int bilen = 40; // 40-byte BITMAPINFOHEADER
 			byte bi[] = new byte[bilen];
 			fs.read(bi, 0, bilen);
 
 			// Interperet data.
-			//int nsize = (((int) bf[5] & 0xff) << 24)
-			//		| (((int) bf[4] & 0xff) << 16)
-			//		| (((int) bf[3] & 0xff) << 8) | (int) bf[2] & 0xff;
-			//System.out.println("Size of file is :" + nsize);
+			// int nsize = (((int) bf[5] & 0xff) << 24)
+			// | (((int) bf[4] & 0xff) << 16)
+			// | (((int) bf[3] & 0xff) << 8) | (int) bf[2] & 0xff;
+			// System.out.println("Size of file is :" + nsize);
 
 			int nbisize = (((int) bi[3] & 0xff) << 24)
 					| (((int) bi[2] & 0xff) << 16)
 					| (((int) bi[1] & 0xff) << 8) | (int) bi[0] & 0xff;
-			//System.out.println("Size of bitmapinfoheader is :" + nbisize);
+			// System.out.println("Size of bitmapinfoheader is :" + nbisize);
 
 			int nwidth = (((int) bi[7] & 0xff) << 24)
 					| (((int) bi[6] & 0xff) << 16)
 					| (((int) bi[5] & 0xff) << 8) | (int) bi[4] & 0xff;
-			//System.out.println("Width is :" + nwidth);
+			// System.out.println("Width is :" + nwidth);
 
 			int nheight = (((int) bi[11] & 0xff) << 24)
 					| (((int) bi[10] & 0xff) << 16)
 					| (((int) bi[9] & 0xff) << 8) | (int) bi[8] & 0xff;
-			//System.out.println("Height is :" + nheight);
+			// System.out.println("Height is :" + nheight);
 
 			int nplanes = (((int) bi[13] & 0xff) << 8) | (int) bi[12] & 0xff;
-			//System.out.println("Planes is :" + nplanes);
+			// System.out.println("Planes is :" + nplanes);
 
 			int nbitcount = (((int) bi[15] & 0xff) << 8) | (int) bi[14] & 0xff;
-			//System.out.println("BitCount is :" + nbitcount);
+			// System.out.println("BitCount is :" + nbitcount);
 
 			// Look for non-zero values to indicate compression
 			int ncompression = (((int) bi[19]) << 24) | (((int) bi[18]) << 16)
 					| (((int) bi[17]) << 8) | (int) bi[16];
-			//System.out.println("Compression is :" + ncompression);
+			// System.out.println("Compression is :" + ncompression);
 
 			int nsizeimage = (((int) bi[23] & 0xff) << 24)
 					| (((int) bi[22] & 0xff) << 16)
 					| (((int) bi[21] & 0xff) << 8) | (int) bi[20] & 0xff;
-			//System.out.println("SizeImage is :" + nsizeimage);
+			// System.out.println("SizeImage is :" + nsizeimage);
 
 			int nxpm = (((int) bi[27] & 0xff) << 24)
 					| (((int) bi[26] & 0xff) << 16)
 					| (((int) bi[25] & 0xff) << 8) | (int) bi[24] & 0xff;
-			//System.out.println("X-Pixels per meter is :" + nxpm);
+			// System.out.println("X-Pixels per meter is :" + nxpm);
 
 			int nypm = (((int) bi[31] & 0xff) << 24)
 					| (((int) bi[30] & 0xff) << 16)
 					| (((int) bi[29] & 0xff) << 8) | (int) bi[28] & 0xff;
-			//System.out.println("Y-Pixels per meter is :" + nypm);
+			// System.out.println("Y-Pixels per meter is :" + nypm);
 
 			int nclrused = (((int) bi[35] & 0xff) << 24)
 					| (((int) bi[34] & 0xff) << 16)
 					| (((int) bi[33] & 0xff) << 8) | (int) bi[32] & 0xff;
-			//System.out.println("Colors used are :" + nclrused);
+			// System.out.println("Colors used are :" + nclrused);
 
 			int nclrimp = (((int) bi[39] & 0xff) << 24)
 					| (((int) bi[38] & 0xff) << 16)
 					| (((int) bi[37] & 0xff) << 8) | (int) bi[36] & 0xff;
-			//System.out.println("Colors important are :" + nclrimp);
+			// System.out.println("Colors important are :" + nclrimp);
 
 			if (nbitcount == 24) {
-				//	 No Palatte data for 24-bit format but scan lines are
-				//	 padded out to even 4-byte boundaries.
+				// No Palatte data for 24-bit format but scan lines are
+				// padded out to even 4-byte boundaries.
 				int npad = (nsizeimage / nheight) - nwidth * 3;
 				int ndata[] = new int[nheight * nwidth];
 				byte brgb[] = new byte[(nwidth + npad) * 3 * nheight];
@@ -385,7 +385,7 @@ public class ClipBMP extends Component {
 								| (((int) brgb[nindex + 2] & 0xff) << 16)
 								| (((int) brgb[nindex + 1] & 0xff) << 8)
 								| (int) brgb[nindex] & 0xff;
-						//	 System.out.println("Encoded Color at ("
+						// System.out.println("Encoded Color at ("
 						// +i+","+j+")is:"+nrgb+" (R,G,B)= (" +((int)(brgb[2]) &
 						// 0xff)+"," +((int)brgb[1]&0xff)+","
 						// +((int)brgb[0]&0xff)+")";
@@ -397,90 +397,29 @@ public class ClipBMP extends Component {
 				image = Toolkit.getDefaultToolkit()
 						.createImage(
 								new MemoryImageSource(nwidth, nheight, ndata,
-										0, nwidth));	
-			}else if (nbitcount == 16) {
-			//	 Have to determine the number of colors, the clrsused
-			//	 parameter is dominant if it is greater than zero. If
-			//	 zero, calculate colors based on bitsperpixel.
-			int nNumColors = 0;
-			if (nclrused > 0) {
-				nNumColors = nclrused;
-			} else {
-				nNumColors = (1 & 0xff) << nbitcount;
-			}
-			//System.out.println("The number of Colors is " + nNumColors);
-
-			//	 Some bitmaps do not have the sizeimage field calculated
-			//	 Ferret out these cases and fix 'em.
-			if (nsizeimage == 0) {
-				nsizeimage = ((((nwidth * nbitcount) + 31) & ~31) >> 3);
-				nsizeimage *= nheight;
-				//System.out.println("nsizeimage (backup) is " + nsizeimage);
-			}
-
-			//	 Read the palatte colors.
-			int npalette[] = new int[nNumColors];
-			byte bpalette[] = new byte[nNumColors * 4];
-			fs.read(bpalette, 0, nNumColors * 4);
-			int nindex8 = 0;
-			for (int n = 0; n < nNumColors; n++) {
-				npalette[n] = (255 & 0xff) << 24
-						| (((int) bpalette[nindex8 + 2] & 0xff) << 16)
-						| (((int) bpalette[nindex8 + 1] & 0xff) << 8)
-						| (int) bpalette[nindex8] & 0xff;
-				//System.out.println ("Palette Color "+n +"
-				// is:"+npalette[n]+" (res,R,G,B)=
-				// ("+((int)(bpalette[nindex8+3]) & 0xff)+","
-				// +((int)(bpalette[nindex8+2]) & 0xff)+","
-				// +((int)bpalette[nindex8+1]&0xff)+","
-				// +((int)bpalette[nindex8]&0xff)+")");
-				nindex8 += 4;
-			}
-
-			//	 Read the image data (actually indices into the palette)
-			//	 Scan lines are still padded out to even 4-byte
-			//	 boundaries.
-			int npad8 = (nsizeimage / nheight) - nwidth;
-			//System.out.println("nPad is:" + npad8);
-
-			int ndata8[] = new int[nwidth * nheight];
-			byte bdata[] = new byte[(nwidth + npad8) * nheight];
-			fs.read(bdata, 0, (nwidth + npad8) * nheight);
-			nindex8 = 0;
-			for (int j8 = 0; j8 < nheight; j8++) {
-				for (int i8 = 0; i8 < nwidth; i8++) {
-					ndata8[nwidth * (nheight - j8 - 1) + i8] =
-						npalette[((int) bdata[nindex8] & 0xff)]
-								 | npalette[((int) bdata[nindex8+1] & 0xff)] << 8; 
-					nindex8+=2;
-				}
-				nindex8 += npad8;
-			}
-
-			image = Toolkit.getDefaultToolkit().createImage(
-					new MemoryImageSource(nwidth, nheight, ndata8, 0,
-							nwidth));
-		}else if (nbitcount == 8) {
-				//	 Have to determine the number of colors, the clrsused
-				//	 parameter is dominant if it is greater than zero. If
-				//	 zero, calculate colors based on bitsperpixel.
+										0, nwidth));
+			} else if (nbitcount == 16) {
+				// Have to determine the number of colors, the clrsused
+				// parameter is dominant if it is greater than zero. If
+				// zero, calculate colors based on bitsperpixel.
 				int nNumColors = 0;
 				if (nclrused > 0) {
 					nNumColors = nclrused;
 				} else {
 					nNumColors = (1 & 0xff) << nbitcount;
 				}
-				//System.out.println("The number of Colors is " + nNumColors);
+				// System.out.println("The number of Colors is " + nNumColors);
 
-				//	 Some bitmaps do not have the sizeimage field calculated
-				//	 Ferret out these cases and fix 'em.
+				// Some bitmaps do not have the sizeimage field calculated
+				// Ferret out these cases and fix 'em.
 				if (nsizeimage == 0) {
 					nsizeimage = ((((nwidth * nbitcount) + 31) & ~31) >> 3);
 					nsizeimage *= nheight;
-					//System.out.println("nsizeimage (backup) is " + nsizeimage);
+					// System.out.println("nsizeimage (backup) is " +
+					// nsizeimage);
 				}
 
-				//	 Read the palatte colors.
+				// Read the palatte colors.
 				int npalette[] = new int[nNumColors];
 				byte bpalette[] = new byte[nNumColors * 4];
 				fs.read(bpalette, 0, nNumColors * 4);
@@ -490,7 +429,7 @@ public class ClipBMP extends Component {
 							| (((int) bpalette[nindex8 + 2] & 0xff) << 16)
 							| (((int) bpalette[nindex8 + 1] & 0xff) << 8)
 							| (int) bpalette[nindex8] & 0xff;
-					//System.out.println ("Palette Color "+n +"
+					// System.out.println ("Palette Color "+n +"
 					// is:"+npalette[n]+" (res,R,G,B)=
 					// ("+((int)(bpalette[nindex8+3]) & 0xff)+","
 					// +((int)(bpalette[nindex8+2]) & 0xff)+","
@@ -499,11 +438,73 @@ public class ClipBMP extends Component {
 					nindex8 += 4;
 				}
 
-				//	 Read the image data (actually indices into the palette)
-				//	 Scan lines are still padded out to even 4-byte
-				//	 boundaries.
+				// Read the image data (actually indices into the palette)
+				// Scan lines are still padded out to even 4-byte
+				// boundaries.
 				int npad8 = (nsizeimage / nheight) - nwidth;
-				//System.out.println("nPad is:" + npad8);
+				// System.out.println("nPad is:" + npad8);
+
+				int ndata8[] = new int[nwidth * nheight];
+				byte bdata[] = new byte[(nwidth + npad8) * nheight];
+				fs.read(bdata, 0, (nwidth + npad8) * nheight);
+				nindex8 = 0;
+				for (int j8 = 0; j8 < nheight; j8++) {
+					for (int i8 = 0; i8 < nwidth; i8++) {
+						ndata8[nwidth * (nheight - j8 - 1) + i8] = npalette[((int) bdata[nindex8] & 0xff)]
+								| npalette[((int) bdata[nindex8 + 1] & 0xff)] << 8;
+						nindex8 += 2;
+					}
+					nindex8 += npad8;
+				}
+
+				image = Toolkit.getDefaultToolkit().createImage(
+						new MemoryImageSource(nwidth, nheight, ndata8, 0,
+								nwidth));
+			} else if (nbitcount == 8) {
+				// Have to determine the number of colors, the clrsused
+				// parameter is dominant if it is greater than zero. If
+				// zero, calculate colors based on bitsperpixel.
+				int nNumColors = 0;
+				if (nclrused > 0) {
+					nNumColors = nclrused;
+				} else {
+					nNumColors = (1 & 0xff) << nbitcount;
+				}
+				// System.out.println("The number of Colors is " + nNumColors);
+
+				// Some bitmaps do not have the sizeimage field calculated
+				// Ferret out these cases and fix 'em.
+				if (nsizeimage == 0) {
+					nsizeimage = ((((nwidth * nbitcount) + 31) & ~31) >> 3);
+					nsizeimage *= nheight;
+					// System.out.println("nsizeimage (backup) is " +
+					// nsizeimage);
+				}
+
+				// Read the palatte colors.
+				int npalette[] = new int[nNumColors];
+				byte bpalette[] = new byte[nNumColors * 4];
+				fs.read(bpalette, 0, nNumColors * 4);
+				int nindex8 = 0;
+				for (int n = 0; n < nNumColors; n++) {
+					npalette[n] = (255 & 0xff) << 24
+							| (((int) bpalette[nindex8 + 2] & 0xff) << 16)
+							| (((int) bpalette[nindex8 + 1] & 0xff) << 8)
+							| (int) bpalette[nindex8] & 0xff;
+					// System.out.println ("Palette Color "+n +"
+					// is:"+npalette[n]+" (res,R,G,B)=
+					// ("+((int)(bpalette[nindex8+3]) & 0xff)+","
+					// +((int)(bpalette[nindex8+2]) & 0xff)+","
+					// +((int)bpalette[nindex8+1]&0xff)+","
+					// +((int)bpalette[nindex8]&0xff)+")");
+					nindex8 += 4;
+				}
+
+				// Read the image data (actually indices into the palette)
+				// Scan lines are still padded out to even 4-byte
+				// boundaries.
+				int npad8 = (nsizeimage / nheight) - nwidth;
+				// System.out.println("nPad is:" + npad8);
 
 				int ndata8[] = new int[nwidth * nheight];
 				byte bdata[] = new byte[(nwidth + npad8) * nheight];
@@ -520,78 +521,93 @@ public class ClipBMP extends Component {
 				image = Toolkit.getDefaultToolkit().createImage(
 						new MemoryImageSource(nwidth, nheight, ndata8, 0,
 								nwidth));
-		}else if(nbitcount == 4){
-//			 Have to determine the number of colors, the clrsused
-			//	 parameter is dominant if it is greater than zero. If
-			//	 zero, calculate colors based on bitsperpixel.
-			int nNumColors = 0;
-			if (nclrused > 0) {
-				nNumColors = nclrused;
-			} else {
-				nNumColors = (1 & 0xff) << nbitcount;
-			}
-			//System.out.println("The number of Colors is " + nNumColors);
-
-			//	 Some bitmaps do not have the sizeimage field calculated
-			//	 Ferret out these cases and fix 'em.
-			if (nsizeimage == 0) {
-				nsizeimage = ((((nwidth * nbitcount) + 31) & ~31) >> 3);
-				nsizeimage *= nheight;
-				//System.out.println("nsizeimage (backup) is " + nsizeimage);
-			}
-
-			//	 Read the palatte colors.
-			int npalette[] = new int[nNumColors + 1];
-			byte bpalette[] = new byte[nNumColors * 4];
-			fs.read(bpalette, 0, nNumColors * 4);
-			int nindex8 = 0;
-			for (int n = 0; n < nNumColors; n++) {
-				npalette[n] = (255 & 0xff) << 24
-						| (((int) bpalette[nindex8 + 2] & 0xff) << 16)
-						| (((int) bpalette[nindex8 + 1] & 0xff) << 8)
-						| (int) bpalette[nindex8] & 0xff;
-				nindex8 += 4;
-			}
-
-			//	 Read the image data (actually indices into the palette)
-			//	 Scan lines are still padded out to even 4-byte
-			//	 boundaries.
-			int npad8 = (nsizeimage * 2 / nheight) - nwidth;
-			//System.out.println("nPad is:" + npad8);
-			if(npad8 == 4) npad8 = 0;
-			
-			int ndata8[] = new int[nwidth * nheight];
-			byte bdata[] = new byte[(nwidth/2 + npad8) * nheight];
-			fs.read(bdata, 0, (nwidth/2 + npad8) * nheight);//(nwidth) * nheight);
-			nindex8 = 0;
-			//System.out.println("nwidth = " + nwidth + ", nheight = " + nheight);
-			for (int j8 = 0; j8 < nheight; j8++) {
-				for (int i8 = 0; i8 < (nwidth) - 1; i8+=2) {
-					ndata8[nwidth * (nheight - j8 - 1) + i8] =  npalette[((int) (bdata[nindex8] & 0x0f))];
-					ndata8[nwidth * (nheight - j8 - 1) + i8+1] = npalette[((int) (bdata[nindex8] & 0xf0) / 0xf)];
-					System.out.print("1:" + (bdata[nindex8] & 0x0f) + "\t");
-					System.out.print("2:" + ((bdata[nindex8] & 0xf0) / 0xf) + "\t");
-					//System.out.print(nindex8 + "/" + nsizeimage + "\t");
-					//ndata8[nwidth * j8 + i8] = npalette[((int) (bdata[nindex8] & 0x0f))];
-					//ndata8[nwidth * j8 + i8 + 1] = npalette[((int) (bdata[nindex8] & 0xf0) / 0xf)];
-					//System.out.print("\t" + (nheight * j8 + i8) + "=(" + npalette[((int) (bdata[nindex8] & 0x0f))] + ")");
-					//System.out.print("\t" + (nheight * j8 + i8 + 1) + "=(" + npalette[((int) (bdata[nindex8] & 0xf0) / 0xf)] + ")");
-					nindex8++;
+			} else if (nbitcount == 4) {
+				// Have to determine the number of colors, the clrsused
+				// parameter is dominant if it is greater than zero. If
+				// zero, calculate colors based on bitsperpixel.
+				int nNumColors = 0;
+				if (nclrused > 0) {
+					nNumColors = nclrused;
+				} else {
+					nNumColors = (1 & 0xff) << nbitcount;
 				}
-				//nindex8 += npad8;
-			}
+				// System.out.println("The number of Colors is " + nNumColors);
 
-			//image = null;
-			image = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(nwidth, nheight, ndata8, 0,nwidth));
-		}else {
-				logger.warn("Not a 24-bit or 8-bit Windows Bitmap, aborting...");
+				// Some bitmaps do not have the sizeimage field calculated
+				// Ferret out these cases and fix 'em.
+				if (nsizeimage == 0) {
+					nsizeimage = ((((nwidth * nbitcount) + 31) & ~31) >> 3);
+					nsizeimage *= nheight;
+					// System.out.println("nsizeimage (backup) is " +
+					// nsizeimage);
+				}
+
+				// Read the palatte colors.
+				int npalette[] = new int[nNumColors + 1];
+				byte bpalette[] = new byte[nNumColors * 4];
+				fs.read(bpalette, 0, nNumColors * 4);
+				int nindex8 = 0;
+				for (int n = 0; n < nNumColors; n++) {
+					npalette[n] = (255 & 0xff) << 24
+							| (((int) bpalette[nindex8 + 2] & 0xff) << 16)
+							| (((int) bpalette[nindex8 + 1] & 0xff) << 8)
+							| (int) bpalette[nindex8] & 0xff;
+					nindex8 += 4;
+				}
+
+				// Read the image data (actually indices into the palette)
+				// Scan lines are still padded out to even 4-byte
+				// boundaries.
+				int npad8 = (nsizeimage * 2 / nheight) - nwidth;
+				// System.out.println("nPad is:" + npad8);
+				if (npad8 == 4)
+					npad8 = 0;
+
+				int ndata8[] = new int[nwidth * nheight];
+				byte bdata[] = new byte[(nwidth / 2 + npad8) * nheight];
+				fs.read(bdata, 0, (nwidth / 2 + npad8) * nheight);// (nwidth)
+																	// *
+																	// nheight);
+				nindex8 = 0;
+				// System.out.println("nwidth = " + nwidth + ", nheight = " +
+				// nheight);
+				for (int j8 = 0; j8 < nheight; j8++) {
+					for (int i8 = 0; i8 < (nwidth) - 1; i8 += 2) {
+						ndata8[nwidth * (nheight - j8 - 1) + i8] = npalette[((int) (bdata[nindex8] & 0x0f))];
+						ndata8[nwidth * (nheight - j8 - 1) + i8 + 1] = npalette[((int) (bdata[nindex8] & 0xf0) / 0xf)];
+						System.out.print("1:" + (bdata[nindex8] & 0x0f) + "\t");
+						System.out.print("2:" + ((bdata[nindex8] & 0xf0) / 0xf)
+								+ "\t");
+						// System.out.print(nindex8 + "/" + nsizeimage + "\t");
+						// ndata8[nwidth * j8 + i8] = npalette[((int)
+						// (bdata[nindex8] & 0x0f))];
+						// ndata8[nwidth * j8 + i8 + 1] = npalette[((int)
+						// (bdata[nindex8] & 0xf0) / 0xf)];
+						// System.out.print("\t" + (nheight * j8 + i8) + "=(" +
+						// npalette[((int) (bdata[nindex8] & 0x0f))] + ")");
+						// System.out.print("\t" + (nheight * j8 + i8 + 1) +
+						// "=(" + npalette[((int) (bdata[nindex8] & 0xf0) /
+						// 0xf)] + ")");
+						nindex8++;
+					}
+					// nindex8 += npad8;
+				}
+
+				// image = null;
+				image = Toolkit.getDefaultToolkit().createImage(
+						new MemoryImageSource(nwidth, nheight, ndata8, 0,
+								nwidth));
+			} else {
+				logger
+						.warn("Not a 24-bit or 8-bit Windows Bitmap, aborting...");
 				image = (Image) null;
 			}
 
 			fs.close();
 			return image;
 		} catch (Exception e) {
-			//System.out.println("\nCaught exception in loadbitmap: " + e.getMessage() + " " + e.getClass().getName());
+			// System.out.println("\nCaught exception in loadbitmap: " +
+			// e.getMessage() + " " + e.getClass().getName());
 		}
 		return (Image) null;
 	}

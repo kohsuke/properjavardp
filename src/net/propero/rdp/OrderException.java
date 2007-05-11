@@ -31,13 +31,13 @@ package net.propero.rdp;
 
 public class OrderException extends Exception {
 
-	private static final long	serialVersionUID	= -4198898937740385398L;
+	private static final long serialVersionUID = -4198898937740385398L;
 
-    public OrderException() {
-	super();
-    }
+	public OrderException() {
+		super();
+	}
 
-    public OrderException(String s) {
-	super(s);
-    }
+	public OrderException(String s) {
+		super(s);
+	}
 }
