@@ -61,7 +61,6 @@ public class RDPClientChooser {
 		logger.info("RDPClientChooser.RunNativeRDPClient");
 
 		String os = System.getProperty("os.name");
-		String osvers = System.getProperty("os.version");
 
 		// For Mac OS X we try to run the Microsoft Remote Desktop Connection
 		// RDP client if it exists
@@ -202,9 +201,9 @@ public class RDPClientChooser {
 		rdpConfigFile.write("screen mode id:i:0\n");
 		rdpConfigFile.write("startdisplay:i:0\n");
 		rdpConfigFile.write("desktop size id:i:6\n"); // full screen - this
-														// needs to be mapped
-														// from geometry param
-														// passed in TBD
+		// needs to be mapped
+		// from geometry param
+		// passed in TBD
 		rdpConfigFile.write("desktopwidth:i:1280\n");
 		rdpConfigFile.write("desktopheight:i:854\n");
 		rdpConfigFile.write("autoshowmenu:i:1\n");
@@ -272,7 +271,7 @@ public class RDPClientChooser {
 						+ rdproot + "/ >/dev/null 2>/dev/null" };
 
 		try {
-			Process p = Runtime.getRuntime().exec(appcopycmd);
+			Runtime.getRuntime().exec(appcopycmd);
 		} catch (IOException e) {
 			logger.warn("Unable to copy application to temporary directory");
 			return false;
@@ -353,7 +352,7 @@ public class RDPClientChooser {
 				"rm -r " + rdproot + " >/dev/null 2>/dev/null" };
 
 		try {
-			Process p = Runtime.getRuntime().exec(rmcmd);
+			Runtime.getRuntime().exec(rmcmd);
 		} catch (IOException e) {
 			logger.warn("Unable to remove temporary directory " + rdproot);
 			return true;

@@ -240,7 +240,7 @@ public abstract class RdesktopCanvas extends Canvas {
 	 *            y coordinate for drawing location
 	 * @throws RdesktopException
 	 */
-	public void displayImage(Image img, int x, int y) throws RdesktopException {
+	public void displayImage(Image img, int x, int y) {
 
 		Graphics g = backstore.getGraphics();
 		g.drawImage(img, x, y, null);
@@ -272,7 +272,7 @@ public abstract class RdesktopCanvas extends Canvas {
 	 * @throws RdesktopException
 	 */
 	public void displayImage(int[] data, int w, int h, int x, int y, int cx,
-			int cy) throws RdesktopException {
+			int cy) {
 
 		backstore.setRGB(x, y, cx, cy, data, 0, w);
 
@@ -328,7 +328,7 @@ public abstract class RdesktopCanvas extends Canvas {
 	public void putImage(int x, int y, int cx, int cy, int[] data) {
 
 		backstore.setRGBNoConversion(x, y, cx, cy, data, 0, // drawing entire
-															// image, no
+				// image, no
 				// offset needed
 				cx);
 

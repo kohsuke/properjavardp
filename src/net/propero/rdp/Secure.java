@@ -509,7 +509,7 @@ public class Secure {
 			headerlength = ((flags & SEC_ENCRYPT) != 0) ? 12 : 0;
 
 		buffer = McsLayer.init(length + headerlength);
-		buffer.pushLayer(RdpPacket_Localised.SECURE_HEADER, headerlength);
+		buffer.pushLayer(RdpPacket.SECURE_HEADER, headerlength);
 		// buffer.setHeader(RdpPacket_Localised.SECURE_HEADER);
 		// buffer.incrementPosition(headerlength);
 		// buffer.setStart(buffer.getPosition());
@@ -553,7 +553,7 @@ public class Secure {
 		byte[] buffer;
 
 		sec_data.setPosition(sec_data
-				.getHeader(RdpPacket_Localised.SECURE_HEADER));
+				.getHeader(RdpPacket.SECURE_HEADER));
 
 		if (this.licenceIssued == false || (flags & SEC_ENCRYPT) != 0) {
 			sec_data.setLittleEndian32(flags);
@@ -1116,7 +1116,7 @@ public class Secure {
 			buffer = McsLayer.receive(channel);
 			if (buffer == null)
 				return null;
-			buffer.setHeader(RdpPacket_Localised.SECURE_HEADER);
+			buffer.setHeader(RdpPacket.SECURE_HEADER);
 			if (Constants.encryption || (!this.licenceIssued)) {
 
 				sec_flags = buffer.getLittleEndian32();

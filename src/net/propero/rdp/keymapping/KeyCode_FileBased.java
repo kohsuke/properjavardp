@@ -95,10 +95,6 @@ public abstract class KeyCode_FileBased {
 	 */
 	public KeyCode_FileBased(String keyMapFile) throws KeyMapException {
 		// logger.info("String called keycode reader");
-		int lineNum = 0; // current line number being parsed
-		String line = ""; // contents of line being parsed
-
-		boolean mapCodeSet = false;
 
 		FileInputStream fstream;
 		try {
@@ -405,7 +401,6 @@ public abstract class KeyCode_FileBased {
 	 */
 	public int charToScancode(char c, String[] mod) {
 		Iterator i = keyMap.iterator();
-		int smallestDist = -1;
 		MapDef best = null;
 
 		while (i.hasNext()) {
@@ -498,7 +493,6 @@ public abstract class KeyCode_FileBased {
 	 * @return Scancode for the supplied keypress, according to current mappings
 	 */
 	public int getScancode(KeyEvent e) {
-		String[] mod = { "" };
 
 		MapDef d = getDef(e);
 

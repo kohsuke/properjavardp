@@ -124,7 +124,7 @@ public class ClipChannel extends VChannel implements ClipInterface,
 			CryptoException {
 
 		int type, status;
-		int length, format;
+		int length;
 
 		type = data.getLittleEndian16();
 		status = data.getLittleEndian16();
@@ -235,11 +235,9 @@ public class ClipChannel extends VChannel implements ClipInterface,
 			request_clipboard_data(currentHandler.preferredFormat());
 	}
 
-	void handle_data_request(RdpPacket data) throws RdesktopException,
-			IOException, CryptoException {
+	void handle_data_request(RdpPacket data) {
 		int format = data.getLittleEndian32();
 		Transferable clipData = clipboard.getContents(this);
-		byte[] outData = null;
 
 		TypeHandler outputHandler = allHandlers.getHandlerForFormat(format);
 		if (outputHandler != null) {
@@ -296,8 +294,8 @@ public class ClipChannel extends VChannel implements ClipInterface,
 		all.setLittleEndian16(CLIPRDR_DATA_RESPONSE);
 		all.setLittleEndian16(CLIPRDR_RESPONSE);
 		all.setLittleEndian32(length + 4); // don't know why, but we need to
-											// add between 1 and 4 to the
-											// length,
+		// add between 1 and 4 to the
+		// length,
 		// otherwise the server cliprdr thread hangs
 		all.copyFromByteArray(data, 0, all.getPosition(), length);
 		all.incrementPosition(length);

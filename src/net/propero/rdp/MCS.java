@@ -155,7 +155,7 @@ public class MCS {
 	public RdpPacket_Localised init(int length) throws RdesktopException {
 		RdpPacket_Localised data = IsoLayer.init(length + 8);
 		// data.pushLayer(RdpPacket_Localised.MCS_HEADER, 8);
-		data.setHeader(RdpPacket_Localised.MCS_HEADER);
+		data.setHeader(RdpPacket.MCS_HEADER);
 		data.incrementPosition(8);
 		data.setStart(data.getPosition());
 		return data;
@@ -187,10 +187,9 @@ public class MCS {
 	public void send_to_channel(RdpPacket_Localised buffer, int channel)
 			throws RdesktopException, IOException {
 		int length = 0;
-		buffer.setPosition(buffer.getHeader(RdpPacket_Localised.MCS_HEADER));
+		buffer.setPosition(buffer.getHeader(RdpPacket.MCS_HEADER));
 
-		length = buffer.getEnd()
-				- buffer.getHeader(RdpPacket_Localised.MCS_HEADER) - 8;
+		length = buffer.getEnd() - buffer.getHeader(RdpPacket.MCS_HEADER) - 8;
 		length |= 0x8000;
 
 		buffer.set8((SDRQ << 2));
@@ -219,7 +218,7 @@ public class MCS {
 		RdpPacket_Localised buffer = IsoLayer.receive();
 		if (buffer == null)
 			return null;
-		buffer.setHeader(RdpPacket_Localised.MCS_HEADER);
+		buffer.setHeader(RdpPacket.MCS_HEADER);
 		opcode = buffer.get8();
 
 		appid = opcode >> 2;
@@ -418,7 +417,7 @@ public class MCS {
 			sendDomainParams(buffer, 2, 2, 0, 0xffff); // target parameters
 			sendDomainParams(buffer, 1, 1, 1, 0x420); // minimun parameters
 			sendDomainParams(buffer, 0xffff, 0xfc17, 0xffff, 0xffff); // maximum
-																		// parameters
+			// parameters
 
 			sendBerHeader(buffer, BER_TAG_OCTET_STRING, data.getEnd());
 
@@ -434,7 +433,7 @@ public class MCS {
 		int length = 9 + domainParamSize(34, 2, 0, 0xffff)
 				+ domainParamSize(1, 1, 1, 0x420)
 				+ domainParamSize(0xffff, 0xfc17, 0xffff, 0xffff) + 4 + datalen; // RDP5
-																					// Code
+		// Code
 
 		RdpPacket_Localised buffer = IsoLayer.init(length + 5);
 
@@ -448,10 +447,10 @@ public class MCS {
 		buffer.set8(0xff); // upward flag
 
 		sendDomainParams(buffer, 34, 2, 0, 0xffff); // target parameters // RDP5
-													// Code
+		// Code
 		sendDomainParams(buffer, 1, 1, 1, 0x420); // minimum parameters
 		sendDomainParams(buffer, 0xffff, 0xfc17, 0xffff, 0xffff); // maximum
-																	// parameters
+		// parameters
 
 		sendBerHeader(buffer, BER_TAG_OCTET_STRING, datalen);
 

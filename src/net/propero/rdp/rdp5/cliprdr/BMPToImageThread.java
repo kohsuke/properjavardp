@@ -51,9 +51,6 @@ public class BMPToImageThread extends Thread {
 	}
 
 	public void run() {
-		String thingy = "";
-		OutputStream out = null;
-
 		int origin = data.getPosition();
 
 		int head_len = data.getLittleEndian32();

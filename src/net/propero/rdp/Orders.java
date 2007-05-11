@@ -339,7 +339,7 @@ public class Orders {
 	 * @throws RdesktopException
 	 */
 	private void processSecondaryOrders(RdpPacket_Localised data)
-			throws OrderException, RdesktopException {
+			throws RdesktopException {
 		int length = 0;
 		int type = 0;
 		int flags = 0;

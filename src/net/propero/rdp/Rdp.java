@@ -434,7 +434,7 @@ public class Rdp {
 
 		buffer = SecureLayer.init(
 				Constants.encryption ? Secure.SEC_ENCRYPT : 0, size + 18);
-		buffer.pushLayer(RdpPacket_Localised.RDP_HEADER, 18);
+		buffer.pushLayer(RdpPacket.RDP_HEADER, 18);
 		// buffer.setHeader(RdpPacket_Localised.RDP_HEADER);
 		// buffer.incrementPosition(18);
 		// buffer.setStart(buffer.getPosition());
@@ -459,7 +459,7 @@ public class Rdp {
 
 		int length;
 
-		data.setPosition(data.getHeader(RdpPacket_Localised.RDP_HEADER));
+		data.setPosition(data.getHeader(RdpPacket.RDP_HEADER));
 		length = data.getEnd() - data.getPosition();
 
 		data.setLittleEndian16(length);

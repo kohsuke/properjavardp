@@ -270,8 +270,7 @@ public class Rdesktop {
 	 * @throws OrderException
 	 * @throws RdesktopException
 	 */
-	public static void main(String[] args) throws OrderException,
-			RdesktopException {
+	public static void main(String[] args) throws RdesktopException {
 
 		// Ensure that static variables are properly initialised
 		keep_running = true;

@@ -281,6 +281,8 @@ public abstract class RdesktopFrame extends Frame {
 
 	class YesNoDialog extends Dialog implements ActionListener {
 
+		private static final long serialVersionUID = 5491261266068232056L;
+
 		Button yes, no;
 
 		boolean retry = false;
@@ -324,6 +326,8 @@ public abstract class RdesktopFrame extends Frame {
 	}
 
 	class OKDialog extends Dialog implements ActionListener {
+		private static final long serialVersionUID = 100978821816327378L;
+
 		public OKDialog(Frame parent, String title, String[] message) {
 
 			super(parent, title, true);

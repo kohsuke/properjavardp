@@ -394,13 +394,13 @@ public abstract class RdpPacket {
 	 */
 	public int getHeader(int header) throws RdesktopException {
 		switch (header) {
-		case RdpPacket_Localised.MCS_HEADER:
+		case RdpPacket.MCS_HEADER:
 			return this.mcs;
-		case RdpPacket_Localised.SECURE_HEADER:
+		case RdpPacket.SECURE_HEADER:
 			return this.secure;
-		case RdpPacket_Localised.RDP_HEADER:
+		case RdpPacket.RDP_HEADER:
 			return this.rdp;
-		case RdpPacket_Localised.CHANNEL_HEADER:
+		case RdpPacket.CHANNEL_HEADER:
 			return this.channel;
 		default:
 			throw new RdesktopException("Wrong Header!");
@@ -416,16 +416,16 @@ public abstract class RdpPacket {
 	 */
 	public void setHeader(int header) throws RdesktopException {
 		switch (header) {
-		case RdpPacket_Localised.MCS_HEADER:
+		case RdpPacket.MCS_HEADER:
 			this.mcs = this.getPosition();
 			break;
-		case RdpPacket_Localised.SECURE_HEADER:
+		case RdpPacket.SECURE_HEADER:
 			this.secure = this.getPosition();
 			break;
-		case RdpPacket_Localised.RDP_HEADER:
+		case RdpPacket.RDP_HEADER:
 			this.rdp = this.getPosition();
 			break;
-		case RdpPacket_Localised.CHANNEL_HEADER:
+		case RdpPacket.CHANNEL_HEADER:
 			this.channel = this.getPosition();
 			break;
 		default:

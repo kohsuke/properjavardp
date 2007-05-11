@@ -45,7 +45,6 @@ import java.net.URL;
 import java.util.StringTokenizer;
 
 import net.propero.rdp.Common;
-import net.propero.rdp.OrderException;
 import net.propero.rdp.Rdesktop;
 import net.propero.rdp.RdesktopException;
 
@@ -206,9 +205,6 @@ class RdpThread extends Thread {
 				URL u = new URL(redirect);
 				parentApplet.getAppletContext().showDocument(u);
 			}
-		} catch (OrderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (RdesktopException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
