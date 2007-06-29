@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src1.4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.4.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.4.2(Sun)"/>
 	<classpathentry kind="lib" path="lib/java-getopt-1.0.13.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-java1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
