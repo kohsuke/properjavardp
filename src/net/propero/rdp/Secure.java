@@ -6,6 +6,7 @@
  * Date: $Date$
  *
  * Copyright (c) 2005 Propero Limited
+ * Copyright (c) 2008 IsmAvatar <cmagicj@nni.com>
  *
  * Purpose: Secure layer of communication
  * 
@@ -61,6 +62,8 @@ public class Secure {
 
 	static final int SEC_MODULUS_SIZE = 64;
 
+	static final int SEC_MAX_MODULUS_SIZE = 256;
+
 	static final int SEC_PADDING_SIZE = 8;
 
 	private static final int SEC_EXPONENT_SIZE = 4;
@@ -113,6 +116,8 @@ public class Secure {
 
 	private int dec_count = 0;
 
+	private int server_public_key_len = 0;
+
 	private byte[] sec_sign_key = null;
 
 	private byte[] sec_decrypt_key = null;
@@ -163,9 +168,9 @@ public class Secure {
 		sec_decrypt_key = new byte[16];
 		sec_encrypt_key = new byte[16];
 		sec_decrypt_update_key = new byte[16]; // changed from 8 - rdesktop
-												// 1.2.0
+		// 1.2.0
 		sec_encrypt_update_key = new byte[16]; // changed from 8 - rdesktop
-												// 1.2.0
+		// 1.2.0
 		sec_crypted_random = new byte[64];
 
 	}
@@ -278,11 +283,11 @@ public class Secure {
 		buffer.setLittleEndian16(0xaa03);
 		buffer.setLittleEndian32(Options.keylayout);
 		buffer.setLittleEndian32(Options.use_rdp5 ? 2600 : 419); // or 0ece
-																	// // client
-																	// build? we
-																	// are 2600
-																	// compatible
-																	// :-)
+		// // client
+		// build? we
+		// are 2600
+		// compatible
+		// :-)
 
 		/* Unicode name of client, padded to 32 bytes */
 		buffer.outUnicodeString(Options.hostname.toUpperCase(), hostlen);
@@ -306,14 +311,14 @@ public class Secure {
 			buffer.incrementPosition(64);
 
 			buffer.setLittleEndian16(SEC_TAG_CLI_4); // out_uint16_le(s,
-														// SEC_TAG_CLI_4);
+			// SEC_TAG_CLI_4);
 			buffer.setLittleEndian16(12); // out_uint16_le(s, 12);
 			buffer.setLittleEndian32(Options.console_session ? 0xb : 0xd); // out_uint32_le(s,
-																			// g_console_session
-																			// ?
-																			// 0xb
-																			// :
-																			// 9);
+			// g_console_session
+			// ?
+			// 0xb
+			// :
+			// 9);
 			buffer.setLittleEndian32(0); // out_uint32(s, 0);
 		}
 
@@ -335,26 +340,26 @@ public class Secure {
 		if (Options.use_rdp5 && (channels.num_channels() > 0)) {
 			logger.debug(("num_channels is " + channels.num_channels()));
 			buffer.setLittleEndian16(SEC_TAG_CLI_CHANNELS); // out_uint16_le(s,
-															// SEC_TAG_CLI_CHANNELS);
+			// SEC_TAG_CLI_CHANNELS);
 			buffer.setLittleEndian16(channels.num_channels() * 12 + 8); // out_uint16_le(s,
-																		// g_num_channels
-																		// * 12
-																		// + 8);
-																		// //
-																		// length
+			// g_num_channels
+			// * 12
+			// + 8);
+			// //
+			// length
 			buffer.setLittleEndian32(channels.num_channels()); // out_uint32_le(s,
-																// g_num_channels);
-																// // number of
-																// virtual
-																// channels
+			// g_num_channels);
+			// // number of
+			// virtual
+			// channels
 			for (int i = 0; i < channels.num_channels(); i++) {
 				logger.debug(("Requesting channel " + channels.channel(i)
 						.name()));
 				buffer.out_uint8p(channels.channel(i).name(), 8); // out_uint8a(s,
-																	// g_channels[i].name,
-																	// 8);
+				// g_channels[i].name,
+				// 8);
 				buffer.setBigEndian32(channels.channel(i).flags()); // out_uint32_be(s,
-																	// g_channels[i].flags);
+				// g_channels[i].flags);
 			}
 		}
 
@@ -421,7 +426,7 @@ public class Secure {
 	 */
 	private void processSrvInfo(RdpPacket_Localised mcs_data) {
 		Options.server_rdp_version = mcs_data.getLittleEndian16(); // in_uint16_le(s,
-																	// g_server_rdp_version);
+		// g_server_rdp_version);
 		logger.debug(("Server RDP version is " + Options.server_rdp_version));
 		if (1 == Options.server_rdp_version)
 			Options.use_rdp5 = false;
@@ -429,15 +434,15 @@ public class Secure {
 
 	public void establishKey() throws RdesktopException, IOException,
 			CryptoException {
-		int length = SEC_MODULUS_SIZE + SEC_PADDING_SIZE;
+		int length = server_public_key_len + SEC_PADDING_SIZE;
 		int flags = SEC_CLIENT_RANDOM;
-		RdpPacket_Localised buffer = this.init(flags, 76);
+		RdpPacket_Localised buffer = this.init(flags, length + 4);
 
 		buffer.setLittleEndian32(length);
 
 		buffer.copyFromByteArray(this.sec_crypted_random, 0, buffer
-				.getPosition(), SEC_MODULUS_SIZE);
-		buffer.incrementPosition(SEC_MODULUS_SIZE);
+				.getPosition(), server_public_key_len);
+		buffer.incrementPosition(server_public_key_len);
 		buffer.incrementPosition(SEC_PADDING_SIZE);
 		buffer.markEnd();
 		this.send(buffer, flags);
@@ -483,7 +488,7 @@ public class Secure {
 			// this.reverse(this.sec_crypted_random);
 		} else {
 			this.generateRandom();
-			this.RSAEncrypt(SEC_RANDOM_SIZE);
+			this.RSAEncrypt(SEC_RANDOM_SIZE, server_public_key_len);
 		}
 		this.generate_keys(rc4_key_size);
 	}
@@ -552,8 +557,7 @@ public class Secure {
 		byte[] data;
 		byte[] buffer;
 
-		sec_data.setPosition(sec_data
-				.getHeader(RdpPacket.SECURE_HEADER));
+		sec_data.setPosition(sec_data.getHeader(RdpPacket.SECURE_HEADER));
 
 		if (this.licenceIssued == false || (flags & SEC_ENCRYPT) != 0) {
 			sec_data.setLittleEndian32(flags);
@@ -748,7 +752,7 @@ public class Secure {
 
 		rc4_key_size = data.getLittleEndian32(); // 1 = 40-Bit 2 = 128 Bit
 		encryption_level = data.getLittleEndian32(); // 1 = low, 2 = medium,
-														// 3 = high
+		// 3 = high
 		if (encryption_level == 0) { // no encryption
 			return 0;
 		}
@@ -773,8 +777,8 @@ public class Secure {
 
 		// data.incrementPosition(12); // unknown bytes
 		int flags = data.getLittleEndian32(); // in_uint32_le(s, flags); // 1
-												// = RDP4-style, 0x80000002 =
-												// X.509
+		// = RDP4-style, 0x80000002 =
+		// X.509
 		logger.debug("Flags = 0x" + Integer.toHexString(flags));
 		if ((flags & 1) != 0) {
 			logger.debug(("We're going for the RDP4-style encryption"));
@@ -856,7 +860,8 @@ public class Secure {
 		 */
 	}
 
-	public void RSAEncrypt(int length) throws RdesktopException {
+	public void RSAEncrypt(int length, int modulus_size)
+			throws RdesktopException {
 		byte[] inr = new byte[length];
 		// int outlength = 0;
 		BigInteger mod = null;
@@ -901,14 +906,14 @@ public class Secure {
 					"Wrong Sign! Expected positive Integer!");
 		}
 
-		if (this.sec_crypted_random.length > SEC_MODULUS_SIZE) {
+		if (this.sec_crypted_random.length > SEC_MAX_MODULUS_SIZE) {
 			logger.warn("sec_crypted_random too big!"); /* FIXME */
 		}
 		this.reverse(this.sec_crypted_random);
 
-		byte[] temp = new byte[SEC_MODULUS_SIZE];
+		byte[] temp = new byte[SEC_MAX_MODULUS_SIZE];
 
-		if (this.sec_crypted_random.length < SEC_MODULUS_SIZE) {
+		if (this.sec_crypted_random.length < modulus_size) {
 			System.arraycopy(this.sec_crypted_random, 0, temp, 0,
 					this.sec_crypted_random.length);
 			for (int i = this.sec_crypted_random.length; i < temp.length; i++) {
@@ -940,12 +945,11 @@ public class Secure {
 					+ "got:" + magic);
 		}
 
-		modulus_length = data.getLittleEndian32();
+		modulus_length = data.getLittleEndian32() - SEC_PADDING_SIZE;
 
-		if (modulus_length != SEC_MODULUS_SIZE + SEC_PADDING_SIZE) {
-			throw new RdesktopException("Wrong modulus size! Expected"
-					+ SEC_MODULUS_SIZE + "+" + SEC_PADDING_SIZE + "got:"
-					+ modulus_length);
+		if (modulus_length < 64 || modulus_length > SEC_MAX_MODULUS_SIZE) {
+			throw new RdesktopException("Bad server public key size ("
+					+ (modulus_length * 8) + " bites)");
 		}
 
 		data.incrementPosition(8); // unknown modulus bits
@@ -953,11 +957,12 @@ public class Secure {
 		data.copyToByteArray(this.exponent, 0, data.getPosition(),
 				SEC_EXPONENT_SIZE);
 		data.incrementPosition(SEC_EXPONENT_SIZE);
-		this.modulus = new byte[SEC_MODULUS_SIZE];
+		this.modulus = new byte[modulus_length];
 		data.copyToByteArray(this.modulus, 0, data.getPosition(),
-				SEC_MODULUS_SIZE);
-		data.incrementPosition(SEC_MODULUS_SIZE);
+				modulus_length);
+		data.incrementPosition(modulus_length);
 		data.incrementPosition(SEC_PADDING_SIZE);
+		this.server_public_key_len = modulus_length;
 
 		if (data.getPosition() <= data.getEnd()) {
 			return true;
@@ -1050,20 +1055,20 @@ public class Secure {
 	public byte[] update(byte[] key, byte[] update_key) throws CryptoException {
 		byte[] shasig = new byte[20];
 		byte[] update = new byte[this.keylength]; // changed from 8 - rdesktop
-													// 1.2.0
+		// 1.2.0
 		byte[] thekey = new byte[key.length];
 
 		sha1.engineReset();
 		sha1.engineUpdate(update_key, 0, keylength);
 		sha1.engineUpdate(pad_54, 0, 40);
 		sha1.engineUpdate(key, 0, keylength); // changed from 8 - rdesktop
-												// 1.2.0
+		// 1.2.0
 		shasig = sha1.engineDigest();
 		sha1.engineReset();
 
 		md5.engineReset();
 		md5.engineUpdate(update_key, 0, keylength); // changed from 8 - rdesktop
-													// 1.2.0
+		// 1.2.0
 		md5.engineUpdate(pad_92, 0, 48);
 		md5.engineUpdate(shasig, 0, 20);
 		thekey = md5.engineDigest();
@@ -1171,10 +1176,8 @@ public class Secure {
 		session_key = this.hash48(temp_hash, this.client_random,
 				this.server_random, 88);
 
-		System.arraycopy(session_key, 0, this.sec_sign_key, 0, 16); // changed
-																	// from 8 -
-																	// rdesktop
-																	// 1.2.0
+		System.arraycopy(session_key, 0, this.sec_sign_key, 0, 16);
+		// changed from 8 - rdesktop 1.2.0
 
 		this.sec_decrypt_key = this.hash16(session_key, this.client_random,
 				this.server_random, 16);
