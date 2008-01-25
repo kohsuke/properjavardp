@@ -41,12 +41,12 @@ public class Options {
 
 	public static int bitmap_decompression_store = INTEGER_BITMAP_DECOMPRESSION;
 
-	public static boolean low_latency = true; // disables bandwidth saving tcp
-												// packets
+	// disables bandwidth saving tcp packets
+	public static boolean low_latency = true;
 
 	public static int keylayout = 0x809; // UK by default
 
-	public static String username = "root"; // -u username
+	public static String username = "Administrator"; // -u username
 
 	public static String domain = ""; // -d domain
 
@@ -98,11 +98,9 @@ public class Options {
 
 	public static int Bpp = (server_bpp + 7) / 8; // Bytes per pixel
 
-	public static int bpp_mask = 0xFFFFFF >> 8 * (3 - Bpp); // Correction value
-															// to ensure only
-															// the relevant
-
-	// number of bytes are used for a pixel
+	// Correction value to ensure only the relevant number of bytes are used for
+	// a pixel
+	public static int bpp_mask = 0xFFFFFF >> 8 * (3 - Bpp);
 
 	public static int imgCount = 0;
 
