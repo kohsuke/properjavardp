@@ -132,7 +132,7 @@ public class RdpApplet extends Applet {
 
 	public void stop() {
 		rThread = null;
-		notify();
+		// notify(); Kohsuke - no one waits for this object, so this is pointless (not to mention incorrect, as it happens outside a synchronized block)
 	}
 
 	private boolean isSet(String parameter) {
