@@ -52,6 +52,11 @@ public abstract class ISO {
 
 	private DataOutputStream out = null;
 
+    /**
+     * Did we request the connection to be closed?
+     */
+    private boolean closed;
+
 	/* this for the ISO Layer */
 	private static final int CONNECTION_REQUEST = 0xE0;
 
@@ -295,8 +300,14 @@ public abstract class ISO {
 
 		next_packet: while (true) {
 			logger.debug("next_packet");
-			s = tcp_recv(null, 4);
-			if (s == null)
+            try {
+                s = tcp_recv(null, 4);
+            } catch (IOException e) {
+                if(closed)
+                    return null;
+                throw e;
+            }
+            if (s == null)
 				return null;
 
 			version = s.get8();
@@ -344,6 +355,7 @@ public abstract class ISO {
 			return;
 		try {
 			sendMessage(DISCONNECT_REQUEST);
+            closed = true;
 			if (in != null)
 				in.close();
 			if (out != null)
