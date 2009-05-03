@@ -6,6 +6,54 @@
   <version>1.0-SNAPSHOT</version>
   <name>Maven repackaging of ProperJavaRDP</name>
 
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <encoding>iso-8859-1</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+            <configuration>
+              <descriptorId>jar-with-dependencies</descriptorId>
+              <archive>
+                <manifest>
+                  <mainClass>net.propero.rdp.Rdesktop</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>build-helper-maven-plugin</artifactId>
+         <executions>
+           <execution>
+             <phase>generate-sources</phase>
+             <goals>
+               <goal>add-source</goal>
+             </goals>
+             <configuration>
+               <sources>
+                 <source>src1.4</source>
+               </sources>
+             </configuration>
+           </execution>
+         </executions>
+       </plugin>
+    </plugins>
+  </build>
+
   <repositories>
     <repository>
       <id>m.g.o-public</id>
@@ -15,15 +63,14 @@
   
   <dependencies>
     <dependency>
-      <groupId>org.jvnet.jax-ws-commons</groupId>
-      <artifactId>virtualbox</artifactId>
-      <version>2.2-rev1</version>
+      <groupId>gnu.getopt</groupId>
+      <artifactId>java-getopt</artifactId>
+      <version>1.0.13</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
     </dependency>
   </dependencies>
 </project>
