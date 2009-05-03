@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kohsuke</groupId>
   <artifactId>properjavardp</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-kohsuke-1-SNAPSHOT</version>
   <name>Maven repackaging of ProperJavaRDP</name>
 
   <build>
@@ -17,6 +17,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2-beta-3</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -51,6 +52,14 @@
            </execution>
          </executions>
        </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0-beta-9</version>
+        <configuration>
+          <!-- sign the bits during a release -->
+          <prepareVerifyArgs>-P release,sign</prepareVerifyArgs>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -73,4 +82,34 @@
       <version>1.2.14</version>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>sign</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <!-- sign the uberjar -->
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <tasks>
+                    <!-- reuse hudson key -->
+                    <signjar jar="target/${project.artifactId}-${project.version}-jar-with-dependencies.jar"
+                             alias="${hudson.sign.alias}" keystore="${hudson.sign.keystore}" storepass="${hudson.sign.storepass}" />
+                  </tasks>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
